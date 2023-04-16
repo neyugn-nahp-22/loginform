@@ -1,8 +1,7 @@
-import React, { useCallback, useState } from 'react'
-import { ILoginParams, ILoginValidation } from '../../../models/auth';
+import { useCallback, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { ILoginParams, ILoginValidation } from '../../../models/auth';
 import { validLogin, validateLogin } from '../utils';
-import { toast } from 'react-toastify';
 
 interface Props {
     onLogin(values: ILoginParams): void;
@@ -25,9 +24,9 @@ const LoginForm = (props: Props) => {
         if (!validLogin(validate)) {
             return
         }
+
         onLogin(formValues)
 
-        toast.success("Đăng nhập thành công")
     }, [formValues, onLogin])
     return (
         <form

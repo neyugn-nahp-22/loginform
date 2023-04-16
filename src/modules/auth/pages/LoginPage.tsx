@@ -16,6 +16,7 @@ import { fetchThunk } from '../../common/redux/thunk';
 import LoginForm from '../components/LoginForm';
 import { setUserInfo } from '../redux/authReducer';
 import LoginFormV2 from '../components/LoginFormV2';
+import { toast } from 'react-hot-toast';
 const LoginPage = () => {
     const dispatch = useDispatch<ThunkDispatch<AppState, null, Action<string>>>()
     const [loading, setLoading] = useState(false);
@@ -38,6 +39,7 @@ const LoginPage = () => {
                 Cookies.set(ACCESS_TOKEN_KEY, json.data.token, { expires: values.rememberMe ? 7 : undefined })
 
                 dispatch(replace(ROUTES.home));
+                toast.success("Login Success")
                 return;
             }
 
@@ -56,8 +58,8 @@ const LoginPage = () => {
             }
         >
             <img src={logo} alt="" style={{ maxWidth: "250px", margin: '32px' }} />
-            <LoginForm onLogin={onLogin} loading={loading} errorMessage={errorMessage} />
-            {/* <LoginFormV2 onLogin={onLogin} loading={loading} errorMessage={errorMessage} /> */}
+            {/* <LoginForm onLogin={onLogin} loading={loading} errorMessage={errorMessage} /> */}
+            <LoginFormV2 onLogin={onLogin} loading={loading} errorMessage={errorMessage} />
         </div >
     )
 }

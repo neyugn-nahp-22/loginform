@@ -11,6 +11,7 @@ import { fetchThunk } from './modules/common/redux/thunk';
 import { API_PATHS } from './configs/api';
 import { RESPONSE_STATUS_SUCCESS } from './utils/httpResponseCode';
 import { setUserInfo } from './modules/auth/redux/authReducer';
+import { Toaster } from 'react-hot-toast'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -39,6 +40,7 @@ function App() {
     <>
       <ToastContainer />
       <Routes />
+      <Toaster />
     </>
   );
 }

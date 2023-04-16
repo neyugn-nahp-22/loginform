@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 import { ILoginParams, ILoginValidation } from "../../../models/auth";
 import { validLogin, validateLogin } from "../utils";
-import { toast } from 'react-toastify';
 
 
 interface Props {
@@ -26,7 +25,6 @@ const LoginFormV2 = (props: Props) => {
             return
         }
         onLogin(data)
-        toast.success("Đăng nhập thành công")
     };
 
     return (
