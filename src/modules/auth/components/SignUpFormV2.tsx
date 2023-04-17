@@ -19,7 +19,7 @@ const SignUpFormV2 = (props: Props) => {
     const { onSignUp, loading, errorMessage, locations, states, onChangeRegion } = props
     console.log(states, 'states');
 
-    const { control, handleSubmit, formState: { errors }, watch, setValue } = useForm<ISignUpParams>({
+    const { control, handleSubmit, formState: { errors }, watch } = useForm<ISignUpParams>({
         defaultValues: {
             email: "",
             password: "",
@@ -61,10 +61,6 @@ const SignUpFormV2 = (props: Props) => {
         return arrRegion;
     }
 
-    const changeRegion = () => (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedRegion = e.target.value as string
-        setValue('region', selectedRegion)
-    }
     const renderState = () => {
         const arrState: JSX.Element[] = []
         states.map((state: ILocationParams, index: number) => {
@@ -186,7 +182,7 @@ const SignUpFormV2 = (props: Props) => {
                 render={({ field }) => (
                     <FormControl margin='normal' error={Boolean(errors.region)}>
                         <InputLabel id="inputRegion">Quốc gia</InputLabel>
-                        <Select {...field} labelId='inputGender' label="Region" onChange={changeRegion} >
+                        <Select {...field} labelId='inputGender' label="Region" >
                             {renderRegion()}
                         </Select>
                         {errors.region && <FormHelperText>Quốc gia không được để trống</FormHelperText>}
