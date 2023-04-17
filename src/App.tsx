@@ -40,7 +40,7 @@ function App() {
     <>
       <ToastContainer />
       <Routes />
-      <Toaster />
+      <Toaster position='top-right' reverseOrder={false} />
     </>
   );
 }

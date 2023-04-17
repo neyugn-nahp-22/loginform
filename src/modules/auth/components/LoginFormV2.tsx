@@ -80,8 +80,10 @@ const LoginFormV2 = (props: Props) => {
                         style={{ minWidth: "160px", display: "flex", alignItems: "center", justifyContent: "center" }}
                         disabled={loading}
                         type="submit"
+
                     >
-                        Submit
+                        {loading && <div className='spinner-border spinner-border-sm text-light mr-2' role='status'></div>}
+                        <FormattedMessage id='login' />
                     </button>
                 </div>
             </div>

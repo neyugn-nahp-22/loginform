@@ -100,7 +100,7 @@ const LoginForm = (props: Props) => {
                         disabled={loading}
                     >
                         {loading && <div className='spinner-border spinner-border-sm text-light mr-2' role='status'></div>}
-                        <FormattedMessage id='register' />
+                        <FormattedMessage id='login' />
                     </button>
                 </div>
             </div>

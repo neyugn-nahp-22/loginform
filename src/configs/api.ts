@@ -1,4 +1,4 @@
-import { APIHost } from "../utils/constants";
+import { APIHost } from '../utils/constants';
 
 enum APIService {
   auth,
@@ -15,10 +15,12 @@ function getBaseUrl(service: APIService) {
     return `${APIHost}`;
   }
 
-  return "";
+  return '';
 }
 
 export const API_PATHS = {
   signIn: `${getBaseUrl(APIService.auth)}/login`,
+  signUp: `${getBaseUrl(APIService.auth)}/register`,
   userProfile: `${getBaseUrl(APIService.public)}/user`,
+  getLocation: `${getBaseUrl(APIService.public)}/location`,
 };

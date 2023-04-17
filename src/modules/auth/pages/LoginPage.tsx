@@ -58,8 +58,8 @@ const LoginPage = () => {
             }
         >
             <img src={logo} alt="" style={{ maxWidth: "250px", margin: '32px' }} />
-            {/* <LoginForm onLogin={onLogin} loading={loading} errorMessage={errorMessage} /> */}
-            <LoginFormV2 onLogin={onLogin} loading={loading} errorMessage={errorMessage} />
+            <LoginForm onLogin={onLogin} loading={loading} errorMessage={errorMessage} />
+            {/* <LoginFormV2 onLogin={onLogin} loading={loading} errorMessage={errorMessage} /> */}
         </div >
     )
 }
