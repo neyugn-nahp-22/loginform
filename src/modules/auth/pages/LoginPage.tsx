@@ -17,6 +17,7 @@ import LoginForm from '../components/LoginForm';
 import { setUserInfo } from '../redux/authReducer';
 import LoginFormV2 from '../components/LoginFormV2';
 import { toast } from 'react-hot-toast';
+import { FormattedMessage } from 'react-intl';
 const LoginPage = () => {
     const dispatch = useDispatch<ThunkDispatch<AppState, null, Action<string>>>()
     const [loading, setLoading] = useState(false);
@@ -60,6 +61,9 @@ const LoginPage = () => {
             <img src={logo} alt="" style={{ maxWidth: "250px", margin: '32px' }} />
             <LoginForm onLogin={onLogin} loading={loading} errorMessage={errorMessage} />
             {/* <LoginFormV2 onLogin={onLogin} loading={loading} errorMessage={errorMessage} /> */}
+            <a href="/sign-up">
+                <FormattedMessage id='register' />
+            </a>
         </div >
     )
 }
