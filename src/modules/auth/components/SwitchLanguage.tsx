@@ -14,7 +14,7 @@ const lang = [
 ]
 const SwitchLanguage = () => {
     const dispatch = useDispatch()
-    const [currentLang, setCurrentLang] = useState(localStorage.getItem("currentLang") || 'en')
+    const [currentLang, setCurrentLang] = useState(localStorage.getItem("currentLang") || 'vi')
     const changeLanguage = (e: ChangeEvent<HTMLSelectElement>) => {
         const selectedValue = e.target.value
         console.log(selectedValue);
