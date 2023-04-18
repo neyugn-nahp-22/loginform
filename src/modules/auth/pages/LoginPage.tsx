@@ -17,6 +17,7 @@ import { RESPONSE_STATUS_SUCCESS } from '../../../utils/httpResponseCode';
 import { fetchThunk } from '../../common/redux/thunk';
 import LoginForm from '../components/LoginForm';
 import { setUserInfo } from '../redux/authReducer';
+import { Link } from 'react-router-dom';
 const LoginPage = () => {
     const dispatch = useDispatch<ThunkDispatch<AppState, null, Action<string>>>()
     const [loading, setLoading] = useState(false);
@@ -60,9 +61,9 @@ const LoginPage = () => {
             <img src={logo} alt="" style={{ maxWidth: "250px", margin: '32px' }} />
             <LoginForm onLogin={onLogin} loading={loading} errorMessage={errorMessage} />
             {/* <LoginFormV2 onLogin={onLogin} loading={loading} errorMessage={errorMessage} /> */}
-            <a href="/sign-up">
+            <Link to={ROUTES.signUp}>
                 <FormattedMessage id='register' />
-            </a>
+            </Link>
         </div >
     )
 }

@@ -17,6 +17,8 @@ import { fetchThunk } from '../../common/redux/thunk'
 import SignUpFormV2 from '../components/SignUpFormV2'
 import { setUserInfo } from '../redux/authReducer'
 import { setLocale } from '../../intl/redux/intlReducer'
+import { Link } from 'react-router-dom'
+import { FormattedMessage } from 'react-intl'
 
 const SignUpPage = () => {
     const dispatch = useDispatch<ThunkDispatch<AppState, null, Action<string>>>()
@@ -104,6 +106,10 @@ const SignUpPage = () => {
                 onChangeRegion={onChangeRegion}
                 states={states}
             />
+            Đã có tài khoản ?
+            <Link to={ROUTES.login}>
+                <FormattedMessage id='login' />
+            </Link>
         </div>
     )
 }
