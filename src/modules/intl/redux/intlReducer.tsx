@@ -17,9 +17,10 @@ const setLocaleAction = createCustomAction('setLocale', (locale: string) => ({
 const actions = { setLocale };
 
 type Action = ActionType<typeof actions>;
+const currentLang = localStorage.getItem(LS_LANG)
 
 export default function reducer(
-  state: IntlState = { locale: 'en' },
+  state: IntlState = { locale: currentLang ?? 'vi' },
   action: Action,
 ) {
   switch (action.type) {

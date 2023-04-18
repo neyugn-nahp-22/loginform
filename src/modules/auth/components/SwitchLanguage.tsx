@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent, useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { setLocale } from '../../intl/redux/intlReducer'
 
@@ -14,11 +14,21 @@ const lang = [
 ]
 const SwitchLanguage = () => {
     const dispatch = useDispatch()
+    const [currentLang, setCurrentLang] = useState(localStorage.getItem("currentLang") || 'en')
     const changeLanguage = (e: ChangeEvent<HTMLSelectElement>) => {
-        dispatch(setLocale(e.target.value))
+        const selectedValue = e.target.value
+        console.log(selectedValue);
+        setCurrentLang(selectedValue)
+        localStorage.setItem("currentLang", selectedValue)
+        dispatch(setLocale(selectedValue))
     }
 
-    // const currentLang = localStorage.getItem()
+    useEffect(() => {
+        const storeValue = localStorage.getItem("currentLang")
+        if (storeValue) {
+            setCurrentLang(storeValue)
+        }
+    }, [])
     return (
         <div>
             <select
@@ -30,6 +40,7 @@ const SwitchLanguage = () => {
                     maxWidth: "200px"
                 }}
                 onChange={changeLanguage}
+                value={currentLang}
             >
                 {lang.map((value, index: number) => (
                     <option key={index} value={value.value}>{value.title}</option>
