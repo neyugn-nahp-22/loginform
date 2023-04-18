@@ -45,6 +45,7 @@ const SignUpForm = (props: Props) => {
                 -- select an option -- {' '}
             </option>
         ]
+        // eslint-disable-next-line array-callback-return
         GENDER.map((g: IGenderParams, index: number) => {
             arrGender.push(
                 <option value={g.value} key={index}>
@@ -61,6 +62,7 @@ const SignUpForm = (props: Props) => {
                 -- select an option -- {' '}
             </option>
         ]
+        // eslint-disable-next-line array-callback-return
         locations.map((location: ILocationParams, index: number) => {
             arrRegion.push(
                 <option value={location.id} key={index}>
@@ -82,6 +84,7 @@ const SignUpForm = (props: Props) => {
                 -- select an option -- {' '}
             </option>
         ]
+        // eslint-disable-next-line array-callback-return
         states.map((state: ILocationParams, index: number) => {
             arrState.push(
                 <option value={state.id} key={index}>

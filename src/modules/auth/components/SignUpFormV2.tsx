@@ -1,10 +1,11 @@
-import { FormControl, FormHelperText, InputLabel, MenuItem, Select } from '@mui/material'
+import { FormControl, FormHelperText, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import { Controller, useForm } from 'react-hook-form'
 import { FormattedMessage } from 'react-intl'
 import { IGenderParams, ILocationParams, ISignUpParams } from '../../../models/auth'
 import { validEmailRegex } from '../../../utils'
 import { GENDER } from '../../intl/constants'
+import SwitchLanguage from './SwitchLanguage'
 
 interface Props {
     onSignUp(values: ISignUpParams): void,
@@ -17,9 +18,8 @@ interface Props {
 
 const SignUpFormV2 = (props: Props) => {
     const { onSignUp, loading, errorMessage, locations, states, onChangeRegion } = props
-    console.log(states, 'states');
 
-    const { control, handleSubmit, formState: { errors }, watch } = useForm<ISignUpParams>({
+    const { control, handleSubmit, formState: { errors }, watch, setValue } = useForm<ISignUpParams>({
         defaultValues: {
             email: "",
             password: "",
@@ -31,6 +31,14 @@ const SignUpFormV2 = (props: Props) => {
         }
     })
 
+
+    const changeRegion = (e: SelectChangeEvent) => {
+        onChangeRegion(e.target.value)
+
+        setValue("region", e.target.value as string)
+    }
+
+    const region = watch("region")
     const password = watch("password")
 
     const onSubmit = (data: ISignUpParams) => {
@@ -39,6 +47,7 @@ const SignUpFormV2 = (props: Props) => {
 
     const renderGender = () => {
         const arrGender: JSX.Element[] = []
+        // eslint-disable-next-line array-callback-return
         GENDER.map((g: IGenderParams, index: number) => {
             arrGender.push(
                 <MenuItem value={g.value} key={index}>
@@ -51,6 +60,7 @@ const SignUpFormV2 = (props: Props) => {
 
     const renderRegion = () => {
         const arrRegion: JSX.Element[] = []
+        // eslint-disable-next-line array-callback-return
         locations.map((location: ILocationParams, index: number) => {
             arrRegion.push(
                 <MenuItem value={location.id} key={index}>
@@ -61,8 +71,10 @@ const SignUpFormV2 = (props: Props) => {
         return arrRegion;
     }
 
+
     const renderState = () => {
         const arrState: JSX.Element[] = []
+        // eslint-disable-next-line array-callback-return
         states.map((state: ILocationParams, index: number) => {
             arrState.push(
                 <MenuItem value={state.id} key={index}>
@@ -84,6 +96,8 @@ const SignUpFormV2 = (props: Props) => {
                     {errorMessage}
                 </div>
             )}
+
+            <SwitchLanguage />
             <Controller
                 name='email'
                 control={control}
@@ -92,12 +106,12 @@ const SignUpFormV2 = (props: Props) => {
                     <TextField
                         {...field}
                         id='inputEmail'
-                        label="Email"
+                        label={<FormattedMessage id="email" />}
                         variant='outlined'
                         fullWidth
                         margin='normal'
                         error={Boolean(errors.email)}
-                        helperText={errors.email ? (errors.email.type === "required" ? "Vui lòng nhập email" : "Sai định dạng email") : ""}
+                        helperText={errors.email ? (errors.email.type === "required" ? <FormattedMessage id="emailRequire" /> : <FormattedMessage id="emailInvalid" />) : ""}
                     />
                 )}
             />
@@ -109,13 +123,13 @@ const SignUpFormV2 = (props: Props) => {
                 render={({ field }) => (
                     <TextField
                         {...field}
-                        label="Mật khẩu"
+                        label={<FormattedMessage id="password" />}
                         type="password"
                         variant="outlined"
                         fullWidth
                         margin="normal"
                         error={Boolean(errors.password)}
-                        helperText={errors.password ? (errors.password.type === "required" ? "Vui lòng nhập password" : "Mật khẩu tối thiểu 4 ký tự") : ""}
+                        helperText={errors.password ? (errors.password.type === "required" ? <FormattedMessage id="passwordRequire" /> : <FormattedMessage id="minPasswordInvalid" />) : ""}
                     />
                 )}
             />
@@ -129,13 +143,13 @@ const SignUpFormV2 = (props: Props) => {
                 render={({ field }) => (
                     <TextField
                         {...field}
-                        label="Xác nhận mật khẩu"
+                        label={<FormattedMessage id="repeatPassword" />}
                         type="password"
                         variant="outlined"
                         fullWidth
                         margin='normal'
                         error={Boolean(errors.repeatPassword)}
-                        helperText={errors.repeatPassword ? "Xác nhận mật khẩu không khớp" : ""}
+                        helperText={errors.repeatPassword ? <FormattedMessage id="matchPasswordInvalid" /> : ""}
                     />
                 )}
             />
@@ -149,13 +163,13 @@ const SignUpFormV2 = (props: Props) => {
                 render={({ field }) => (
                     <TextField
                         {...field}
-                        label="Họ và tên"
+                        label={<FormattedMessage id="name" />}
                         type="text"
                         variant="outlined"
                         fullWidth
                         margin='normal'
                         error={Boolean(errors.name)}
-                        helperText={errors.name ? "Họ và tên không được để trống" : ""}
+                        helperText={errors.name ? <FormattedMessage id="nameRequire" /> : ""}
                     />
                 )}
             />
@@ -166,11 +180,16 @@ const SignUpFormV2 = (props: Props) => {
                 rules={{ required: true }}
                 render={({ field }) => (
                     <FormControl margin='normal' error={Boolean(errors.gender)}>
-                        <InputLabel id="inputGender">Giới tính</InputLabel>
-                        <Select {...field} labelId='inputGender' label="Gender">
+                        <InputLabel id="inputGender">
+                            <FormattedMessage id="gender" />
+                        </InputLabel>
+                        <Select {...field} labelId='inputGender' label={<FormattedMessage id="gender" />}>
                             {renderGender()}
                         </Select>
-                        {errors.gender && <FormHelperText>Giới tính không được để trống</FormHelperText>}
+                        {errors.gender &&
+                            <FormHelperText>
+                                <FormattedMessage id="genderRequire" />
+                            </FormHelperText>}
                     </FormControl>
                 )}
             />
@@ -181,29 +200,45 @@ const SignUpFormV2 = (props: Props) => {
                 rules={{ required: true }}
                 render={({ field }) => (
                     <FormControl margin='normal' error={Boolean(errors.region)}>
-                        <InputLabel id="inputRegion">Quốc gia</InputLabel>
-                        <Select {...field} labelId='inputGender' label="Region" >
+                        <InputLabel id="inputRegion">
+                            <FormattedMessage id="region" />
+                        </InputLabel>
+                        <Select
+                            {...field}
+                            labelId='inputGender'
+                            label={<FormattedMessage id="gender" />}
+                            value={field.value}
+                            onChange={changeRegion}
+                        >
                             {renderRegion()}
                         </Select>
-                        {errors.region && <FormHelperText>Quốc gia không được để trống</FormHelperText>}
+                        {errors.region &&
+                            <FormHelperText>
+                                <FormattedMessage id="regionRequire" />
+                            </FormHelperText>}
                     </FormControl>
                 )}
             />
 
-            <Controller
+            {region ? <Controller
                 name="state"
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) => (
                     <FormControl margin='normal' error={Boolean(errors.state)}>
-                        <InputLabel id="inputState">Thành phố</InputLabel>
-                        <Select {...field} labelId='inputState' label="State">
+                        <InputLabel id="inputState">
+                            <FormattedMessage id="state" />
+                        </InputLabel>
+                        <Select {...field} labelId='inputState' label={<FormattedMessage id="state" />}>
                             {renderState()}
                         </Select>
-                        {errors.state && <FormHelperText>Thành phố không được để trống</FormHelperText>}
+                        {errors.state &&
+                            <FormHelperText>
+                                <FormattedMessage id="stateRequire" />
+                            </FormHelperText>}
                     </FormControl>
                 )}
-            />
+            /> : ""}
 
             <div className="row justify-content-md-center" style={{ margin: "16px 0" }}>
                 <div className="col-md-auto">

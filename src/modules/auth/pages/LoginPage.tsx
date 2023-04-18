@@ -1,6 +1,8 @@
 import { replace } from 'connected-react-router';
 import Cookies from 'js-cookie';
 import { useCallback, useState } from 'react';
+import { toast } from 'react-hot-toast';
+import { FormattedMessage } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { Action } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
@@ -15,9 +17,6 @@ import { RESPONSE_STATUS_SUCCESS } from '../../../utils/httpResponseCode';
 import { fetchThunk } from '../../common/redux/thunk';
 import LoginForm from '../components/LoginForm';
 import { setUserInfo } from '../redux/authReducer';
-import LoginFormV2 from '../components/LoginFormV2';
-import { toast } from 'react-hot-toast';
-import { FormattedMessage } from 'react-intl';
 const LoginPage = () => {
     const dispatch = useDispatch<ThunkDispatch<AppState, null, Action<string>>>()
     const [loading, setLoading] = useState(false);
@@ -40,7 +39,7 @@ const LoginPage = () => {
                 Cookies.set(ACCESS_TOKEN_KEY, json.data.token, { expires: values.rememberMe ? 7 : undefined })
 
                 dispatch(replace(ROUTES.home));
-                toast.success("Login Success")
+                toast.success("Đăng nhập thành công")
                 return;
             }
 
