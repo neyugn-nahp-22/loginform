@@ -2,7 +2,9 @@ import { replace } from 'connected-react-router'
 import Cookies from 'js-cookie'
 import { useCallback, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
+import { FormattedMessage } from 'react-intl'
 import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { Action } from 'redux'
 import { ThunkDispatch } from 'redux-thunk'
 import { API_PATHS } from '../../../configs/api'
@@ -16,9 +18,6 @@ import { RESPONSE_STATUS_SUCCESS } from '../../../utils/httpResponseCode'
 import { fetchThunk } from '../../common/redux/thunk'
 import SignUpFormV2 from '../components/SignUpFormV2'
 import { setUserInfo } from '../redux/authReducer'
-import { setLocale } from '../../intl/redux/intlReducer'
-import { Link } from 'react-router-dom'
-import { FormattedMessage } from 'react-intl'
 
 const SignUpPage = () => {
     const dispatch = useDispatch<ThunkDispatch<AppState, null, Action<string>>>()
@@ -48,8 +47,7 @@ const SignUpPage = () => {
 
     useEffect(() => {
         getLocation(idRegion)
-        dispatch(setLocale("vi"))
-    }, [dispatch, getLocation, idRegion])
+    }, [getLocation, idRegion])
 
     const onSignUp = useCallback(
         async (values: ISignUpParams) => {

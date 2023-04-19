@@ -6,7 +6,6 @@ import smoothscroll from 'smoothscroll-polyfill';
 import App from './App';
 import './index.css';
 import ConnectedIntlProvider from './modules/intl/components/ConnectedIntlProvider';
-import { setLocale } from './modules/intl/redux/intlReducer';
 import configureStore, { history } from './redux/configureStore';
 import reportWebVitals from './reportWebVitals';
 
@@ -14,7 +13,7 @@ smoothscroll.polyfill();
 
 const { store, persistor } = configureStore({});
 
-store.dispatch(setLocale('vi'));
+// store.dispatch(setLocale('vi'));
 
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)

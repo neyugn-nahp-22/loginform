@@ -4,6 +4,7 @@ import { useCallback, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Action } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { API_PATHS } from '../../../configs/api';
@@ -15,9 +16,8 @@ import { getErrorMessageResponse } from '../../../utils';
 import { ACCESS_TOKEN_KEY } from '../../../utils/constants';
 import { RESPONSE_STATUS_SUCCESS } from '../../../utils/httpResponseCode';
 import { fetchThunk } from '../../common/redux/thunk';
-import LoginForm from '../components/LoginForm';
+import LoginFormV2 from '../components/LoginFormV2';
 import { setUserInfo } from '../redux/authReducer';
-import { Link } from 'react-router-dom';
 const LoginPage = () => {
     const dispatch = useDispatch<ThunkDispatch<AppState, null, Action<string>>>()
     const [loading, setLoading] = useState(false);
@@ -59,8 +59,8 @@ const LoginPage = () => {
             }
         >
             <img src={logo} alt="" style={{ maxWidth: "250px", margin: '32px' }} />
-            <LoginForm onLogin={onLogin} loading={loading} errorMessage={errorMessage} />
-            {/* <LoginFormV2 onLogin={onLogin} loading={loading} errorMessage={errorMessage} /> */}
+            {/* <LoginForm onLogin={onLogin} loading={loading} errorMessage={errorMessage} /> */}
+            <LoginFormV2 onLogin={onLogin} loading={loading} errorMessage={errorMessage} />
             <Link to={ROUTES.signUp}>
                 <FormattedMessage id='register' />
             </Link>

@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 import { ILoginParams, ILoginValidation } from "../../../models/auth";
 import { validLogin, validateLogin } from "../utils";
+import SwitchLanguage from './SwitchLanguage';
 
 
 interface Props {
@@ -38,6 +39,7 @@ const LoginFormV2 = (props: Props) => {
                     {errorMessage}
                 </div>
             )}
+            <SwitchLanguage />
             <div className="col-md-12">
                 <label htmlFor='inputEmail' className='form-label'>Email</label>
                 <input
