@@ -24,15 +24,15 @@ export default function todoReducer(state: TodoState = intlPhoto, action: IActio
         loading: false,
       };
     case COMFIRM_TITLE_PHOTO:
-      const newdata = [...state.listPhoto].map((el) => {
-        const currentData = action.payload.find((data: ChangeTitle) => data.id === el.id);
-        if (currentData && el.id === currentData.id) {
+      const newdata = [...state.listPhoto].map((curr) => {
+        const currentData = action.payload.find((data: ChangeTitle) => data.id === curr.id);
+        if (currentData && curr.id === currentData.id) {
           return {
-            ...el,
+            ...curr,
             title: currentData.title,
           };
         }
-        return el;
+        return curr;
       });
 
       return {

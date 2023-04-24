@@ -1,10 +1,10 @@
 import React from 'react'
-import PayrollForm from '../components/PayrollForm'
+import ProductForm from '../components/ProductForm'
 
 const PayrollPage = () => {
     return (
         <div>
-            <PayrollForm />
+            <ProductForm />
         </div>
     )
 }

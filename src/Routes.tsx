@@ -8,6 +8,8 @@ const ContactPage = lazy(() => import('./modules/home/pages/ContactPage'));
 const LoginPage = lazy(() => import('./modules/auth/pages/LoginPage'));
 const SignUpPage = lazy(() => import('./modules/auth/pages/SignUpPage'));
 const TodoPage = lazy(() => import('./modules/todo/pages/TodoPage'))
+const PayrollPage = lazy(() => import("./modules/product/pages/ProductPage"))
+
 interface Props { }
 
 export const Routes = (props: Props) => {
@@ -21,8 +23,9 @@ export const Routes = (props: Props) => {
                 <ProtectedRoute path={ROUTES.home} component={HomePage} />
                 <Route path={ROUTES.contact} component={ContactPage} />
                 <Route path={ROUTES.todoList} component={TodoPage} />
+                <Route path={ROUTES.table} component={PayrollPage} />
 
-                <Route path="/" component={LoginPage} />
+                <Route path="/" component={TodoPage} />
             </Switch>
         </Suspense>
     );
