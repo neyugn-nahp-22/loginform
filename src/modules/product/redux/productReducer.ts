@@ -1,5 +1,5 @@
 import { ActionType, createCustomAction, getType } from 'typesafe-actions';
-import { IProduct } from '../../../models/product';
+import { IProduct, IProductId } from '../../../models/product';
 
 export interface ProductState {
   product?: IProduct;
@@ -13,11 +13,15 @@ export const getProductById = createCustomAction('product/getProductById', (data
   data,
 }));
 
-export const deleteProduct = createCustomAction('product/deleteProduct', (data: IProduct) => ({
+export const deleteProduct = createCustomAction('product/deleteProduct', (data: IProductId) => ({
   data,
 }));
 
-const actions = { getProduct, getProductById, deleteProduct };
+export const filterStatus = createCustomAction('product/filterStatus', (data: IProduct) => ({
+  data,
+}));
+
+const actions = { getProduct, getProductById, deleteProduct, filterStatus };
 
 type Action = ActionType<typeof actions>;
 
@@ -37,6 +41,11 @@ export default function reducer(state: ProductState = {}, action: Action) {
       return {
         ...state,
         product: action.data,
+      };
+    case getType(filterStatus):
+      return {
+        ...state,
+        status: action.data.status,
       };
     default:
       return state;

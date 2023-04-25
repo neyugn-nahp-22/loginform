@@ -1,23 +1,36 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import { faTrashCan } from '@fortawesome/free-regular-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { Button } from 'antd'
+import { useCallback, useEffect, useState } from 'react'
 import Table from 'react-bootstrap/Table'
-import { Button, Form } from 'react-bootstrap'
-import { DeleteOutline } from '@mui/icons-material'
-import { fetchThunk } from '../../common/redux/thunk'
-import { API_PATHS } from '../../../configs/api'
 import { useDispatch } from 'react-redux'
-import { ThunkDispatch } from 'redux-thunk'
-import { AppState } from '../../../redux/reducer'
 import { Action } from 'redux'
-import { IProduct } from '../../../models/product'
+import { ThunkDispatch } from 'redux-thunk'
+import { API_PATHS } from '../../../configs/api'
+import { AppState } from '../../../redux/reducer'
 import { RESPONSE_STATUS_SUCCESS } from '../../../utils/httpResponseCode'
+import { fetchThunk } from '../../common/redux/thunk'
+import { deleteProduct } from '../redux/productReducer'
+import FilterComponent from './FilterComponent'
 
-interface Props {
-    product: Array<IProduct>
-}
 
 const ProducForm = () => {
     const dispatch = useDispatch<ThunkDispatch<AppState, null, Action<string>>>()
     const [values, setValues] = useState([])
+
+
+    const totalRecord = values.length;
+    const totalPage = Math.ceil(totalRecord / 5)
+
+    console.log(totalPage);
+    let page = []
+    for (let i = 1; i <= totalPage; i++) {
+        let button = (
+            <Button key={i} onClick={() => { }}>{i}</Button>
+        )
+        page.push(button)
+    }
+
 
     const getAllProduct = useCallback(
         async () => {
@@ -28,31 +41,25 @@ const ProducForm = () => {
             }
         }, [dispatch])
 
-
-
     useEffect(() => {
         getAllProduct()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    const handleDeleteProd = async (currId: string) => {
+        const currentID = await dispatch(fetchThunk(`${API_PATHS.getAllProduct}/${currId}`, 'delete', { id: currId }))
 
-    const handleDelete = (id: number) => {
-
+        if (currentID?.code === RESPONSE_STATUS_SUCCESS) {
+            dispatch(deleteProduct(currentID.data))
+            getAllProduct()
+            return
+        }
     }
+
+
     return (
-        <Form>
-            <Form.Label style={{ fontWeight: 600, fontSize: "1.8rem" }}>List Product</Form.Label>
-            <Form.Group className='' controlId="">
-                <Form.Select style={{
-                    width: "150px",
-                    margin: "10px 5px"
-                }}>
-                    <option>Status</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </Form.Select>
-            </Form.Group>
+        <div>
+            <FilterComponent />
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -60,6 +67,7 @@ const ProducForm = () => {
                         <th>Date</th>
                         <th>Currency</th>
                         <th>Total</th>
+                        <th>Action</th>
                     </tr>
                     {values.map((item: any, index) => {
                         return (
@@ -69,9 +77,9 @@ const ProducForm = () => {
                                 <th>{item.currency}</th>
                                 <th>{item.total}</th>
                                 <th>
-                                    <Button variant='outline-primary'>View Details</Button>
-                                    <Button variant='outline-danger'>
-                                        <DeleteOutline />
+                                    <Button type='primary' style={{ margin: "10px" }}>View Details</Button>
+                                    <Button onClick={() => handleDeleteProd(item.id)} danger>
+                                        <FontAwesomeIcon icon={faTrashCan} />
                                     </Button>
                                 </th>
                             </tr>
@@ -79,7 +87,9 @@ const ProducForm = () => {
                     })}
                 </thead>
             </Table >
-        </Form>
+            <div>{page}</div>
+        </div >
+
     )
 }
 
