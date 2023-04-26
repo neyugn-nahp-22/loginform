@@ -61,7 +61,7 @@ const ProductPage = () => {
     }, [dispatch, getAllProduct])
 
     const handleFilterStatus = (e: (ChangeEvent<HTMLSelectElement>)) => {
-        console.log(e.target.value, 'STATUS');
+        console.log(e.target.value, 'AAA');
         // dispatch(filterStatus({ ...filterProduct, status: e.target.value }))
     }
 
