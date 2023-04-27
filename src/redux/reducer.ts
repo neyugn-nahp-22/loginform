@@ -4,12 +4,16 @@ import { combineReducers } from 'redux';
 import authReducer, { AuthState } from '../modules/auth/redux/authReducer';
 import intlReducer, { IntlState } from '../modules/intl/redux/intlReducer';
 import todoReducer, { TodoState } from '../modules/todo/redux/todoReducer';
+import productReducer, { ProductState } from '../modules/product/redux/productReducer';
+import profileReducer, { ProfileState } from '../modules/profile/redux/ProfileReducer';
 
 export interface AppState {
   router: RouterState;
   intl: IntlState;
   profile: AuthState;
   todo: TodoState;
+  product: ProductState;
+  profileUser: ProfileState;
 }
 
 export default function createRootReducer(history: History) {
@@ -18,5 +22,7 @@ export default function createRootReducer(history: History) {
     intl: intlReducer,
     profile: authReducer,
     todo: todoReducer,
+    product: productReducer,
+    profileUser: profileReducer,
   });
 }

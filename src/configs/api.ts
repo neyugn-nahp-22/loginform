@@ -25,5 +25,6 @@ export const API_PATHS = {
   getLocation: `${getBaseUrl(APIService.public)}/location`,
   getAllProduct: `${getBaseUrl(APIService.public)}/product`,
   getProductById: `${getBaseUrl(APIService.public)}/product/:id`,
+  profile: `${getBaseUrl(APIService.public)}/user`,
   getPhoto: `https://jsonplaceholder.typicode.com/photos?_start=0&_end=10`,
 };

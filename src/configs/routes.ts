@@ -5,4 +5,5 @@ export const ROUTES = {
   signUp: '/sign-up',
   todoList: '/todo',
   product: '/product',
+  profile: '/profile',
 };

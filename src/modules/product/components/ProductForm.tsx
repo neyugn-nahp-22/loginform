@@ -16,14 +16,15 @@ const ProducForm = (props: Props) => {
   let page = []
   for (let i = 1; i <= totalPage; i++) {
     let button = (
-      <button key={i} onClick={() => { }}>{i}</button>
+      <button className='btn btn-success' key={i} onClick={() => { }}>{i}</button>
     )
     page.push(button)
   }
 
   return (
     <div>
-      <table>
+      <table className='table table-striped'>
+
         <thead>
           <tr>
             <th>Status</th>
@@ -34,6 +35,8 @@ const ProducForm = (props: Props) => {
             <th>Invoice#</th>
             <th>Action</th>
           </tr>
+        </thead>
+        <tbody>
           {values.map((item: any, index) => {
             return (
               <tr key={index}>
@@ -44,16 +47,17 @@ const ProducForm = (props: Props) => {
                 <th>{item.total}</th>
                 <th>{item.invoice}</th>
                 <th>
-                  <button style={{ margin: "10px" }}>View Details</button>
-                  <button onClick={() => handleDeleteProduct(item.id)}>
+                  <button type='button' className='btn btn-primary' style={{ margin: "10px" }}>View Details</button>
+                  <button className='btn btn-danger' onClick={() => handleDeleteProduct(item.id)}>
                     <FontAwesomeIcon icon={faTrashCan} />
                   </button>
                 </th>
+
               </tr>
             )
           })}
-        </thead>
-      </table>
+        </tbody>
+      </table >
       <div>{page}</div>
     </div >
 

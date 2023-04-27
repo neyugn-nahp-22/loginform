@@ -3,16 +3,17 @@ import { useDispatch } from 'react-redux'
 import { Action } from 'redux'
 import { ThunkDispatch } from 'redux-thunk'
 import { API_PATHS } from '../../../configs/api'
+import { FilterProduct, IProduct } from '../../../models/product'
 import { AppState } from '../../../redux/reducer'
 import { RESPONSE_STATUS_SUCCESS } from '../../../utils/httpResponseCode'
 import { fetchThunk } from '../../common/redux/thunk'
-import ProductForm from '../components/ProductForm'
 import FilterComponent from '../components/FilterComponent'
-import { deleteProduct, filterStatus } from '../redux/productReducer'
-import { FilterProduct, IProduct } from '../../../models/product'
+import ProductForm from '../components/ProductForm'
+import { deleteProduct } from '../redux/productReducer'
 
 const ProductPage = () => {
     const dispatch = useDispatch<ThunkDispatch<AppState, null, Action<string>>>()
+
 
     const [values, setValues] = useState<IProduct>({
         id: 1,
@@ -54,16 +55,18 @@ const ProductPage = () => {
 
         if (currentId?.code === RESPONSE_STATUS_SUCCESS) {
             dispatch(deleteProduct(currentId.data))
-            // console.log(currentId.data, 'currentID');
+            console.log(currentId.data, 'currentID');
             getAllProduct()
             return
         }
     }, [dispatch, getAllProduct])
 
-    const handleFilterStatus = (e: (ChangeEvent<HTMLSelectElement>)) => {
-        console.log(e.target.value, 'AAA');
-        // dispatch(filterStatus({ ...filterProduct, status: e.target.value }))
+    const handleFilterStatus = (e: ChangeEvent<HTMLSelectElement>) => {
+        setFilterProduct((prev) => ({ ...prev, [e.target.value]: e.target.value }))
+        console.log(values);
     }
+
+
 
     return (
         <div>

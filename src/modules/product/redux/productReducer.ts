@@ -46,6 +46,10 @@ export default function reducer(state: ProductState = {}, action: Action) {
       return {
         ...state,
         status: action.data.status,
+        client: action.data.client,
+        createAt: action.data.createdAt,
+        updateAt: action.data.updatedAt,
+        invoice: action.data.invoice,
       };
     default:
       return state;
