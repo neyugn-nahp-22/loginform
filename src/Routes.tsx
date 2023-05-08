@@ -28,7 +28,7 @@ export const Routes = (props: Props) => {
                 <Route path={ROUTES.product} component={ProductPage} />
                 <Route path={ROUTES.profile} component={ProfilePage} />
 
-                <Route path="/" component={HomePage} />
+                <Route path="/" component={LoginPage} />
             </Switch>
         </Suspense>
     );

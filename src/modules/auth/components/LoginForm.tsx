@@ -2,6 +2,11 @@ import { useCallback, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { ILoginParams, ILoginValidation } from '../../../models/auth';
 import { validLogin, validateLogin } from '../utils';
+import { Box, Container, FilledInput, FormControl, IconButton, InputAdornment, Paper, Typography } from '@mui/material';
+import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import '../pages/Login.scss'
 
 interface Props {
     onLogin(values: ILoginParams): void;
@@ -15,6 +20,16 @@ const LoginForm = (props: Props) => {
 
     const [formValues, setFormValues] = useState<ILoginParams>({ email: "", password: "", rememberMe: false })
     const [validate, setValidate] = useState<ILoginValidation>();
+    const [inputValues, setInputValues] = useState("")
+    const [showPassword, setShowPassword] = useState(false)
+
+    const handleChangeInput = (e: any) => {
+        setInputValues(e.target.value)
+    }
+
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword)
+    }
 
     const onSubmit = useCallback(() => {
         const validate = validateLogin(formValues)
@@ -29,82 +44,73 @@ const LoginForm = (props: Props) => {
 
     }, [formValues, onLogin])
     return (
-        <form
-            style={{ maxWidth: '560px', width: '100%' }}
-            noValidate
-            onSubmit={(e) => {
-                e.preventDefault();
-                onSubmit()
-            }}
-            className="row g-3 needs-validation"
-        >
-
-            {!!errorMessage && (
-                <div className="alert alert-danger" role="alert" style={{ width: '100%' }}>
-                    {errorMessage}
-                </div>
-            )}
-            <div className='col-md-12'>
-                <label htmlFor='inputEmail' className='form-label'>
-                    <FormattedMessage id="email" />
-                </label>
-                <input
-                    type='text'
-                    className='form-control'
-                    id="inputEmail"
-                    value={formValues.email}
-                    onChange={(e) => setFormValues({ ...formValues, email: e.target.value })}
-                />
-
-                {!!validate?.email && (
-                    <small className="text-danger">
-                        <FormattedMessage id={validate?.email} />
-                    </small>
-                )}
-            </div>
-
-            <div className='col-md-12'>
-                <label className='form-label' htmlFor="inputPassword">
-                    <FormattedMessage id='password' />
-                </label>
-                <input
-                    type='password'
-                    className='form-control'
-                    id="inputPassword"
-                    value={formValues.password}
-                    onChange={(e) => setFormValues({ ...formValues, password: e.target.value })}
-                />
-
-                {!!validate?.password && (
-                    <small className="text-danger">
-                        <FormattedMessage id={validate?.password} />
-                    </small>
-                )}
-            </div>
-
-            <div className='col-12'>
-                <div className="form-check">
-                    <input type="checkbox" className='form-check-input' id='invalidCheck' value="" />
-                    <label htmlFor="invalidCheck" className='form-check-label'>
-                        <FormattedMessage id='rememberMe' />
-                    </label>
-                </div>
-            </div>
-
-            <div className="row justify-content-md-center" style={{ margin: "16px 0" }}>
-                <div className="col-md-auto">
-                    <button
-                        className='btn btn-primary'
-                        type='submit'
-                        style={{ minWidth: "160px", display: "flex", alignItems: "center", justifyContent: "center" }}
-                        disabled={loading}
-                    >
-                        {loading && <div className='spinner-border spinner-border-sm text-light mr-2' role='status'></div>}
-                        <FormattedMessage id='login' />
-                    </button>
-                </div>
-            </div>
-        </form>
+        <Container className='login-container' component='main' maxWidth="lg">
+            <Box className="login-content">
+                <Typography className='login-label' variant='h3'>
+                    Sign In
+                </Typography>
+                <Paper className='login-paper' elevation={4}>
+                    <Box component='form' className='login-form'>
+                        <Grid2 container spacing={1} className="login-form-content">
+                            <Grid2 direction="row" xs={12}>
+                                <Typography>
+                                    Username
+                                    <span></span>
+                                </Typography>
+                            </Grid2>
+                            <Grid2 className="login-form-input">
+                                <FormControl>
+                                    <FilledInput
+                                        disableUnderline
+                                        fullWidth
+                                        style={{
+                                            paddingRight: "0px"
+                                        }}
+                                    />
+                                </FormControl>
+                            </Grid2>
+                        </Grid2>
+                        <Grid2 container spacing={1} className="login-form-content">
+                            <Grid2 direction="row" xs={12}>
+                                <Typography>
+                                    Password
+                                    <span></span>
+                                </Typography>
+                            </Grid2>
+                            <Grid2 className="login-form-input">
+                                <FormControl>
+                                    <FilledInput
+                                        disableUnderline
+                                        type={showPassword ? 'text' : 'password'}
+                                        value={inputValues}
+                                        onChange={handleChangeInput}
+                                    />
+                                </FormControl>
+                            </Grid2>
+                        </Grid2>
+                        <Grid2 container spacing={1} className="login-form-content">
+                            <Grid2 direction="row" xs={12}>
+                                <Typography>
+                                    Factory
+                                    <span></span>
+                                </Typography>
+                            </Grid2>
+                            <Grid2 className="login-form-input">
+                                <FormControl>
+                                    <FilledInput
+                                        disableUnderline
+                                        fullWidth
+                                        style={{
+                                            paddingRight: "0px"
+                                        }}
+                                    />
+                                </FormControl>
+                            </Grid2>
+                        </Grid2>
+                    </Box>
+                </Paper>
+            </Box >
+        </Container>
     )
 }
 

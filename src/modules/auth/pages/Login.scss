@@ -1,0 +1,130 @@
+.login-wrapper {
+  -webkit-box-align: center;
+  align-items: center;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.login-logo {
+  width: 100px;
+  height: 100px;
+  margin-top: 64px;
+}
+
+.login-title {
+  margin: 0px 0px 0.35em !important;
+  font-weight: 500 !important;
+  line-height: 1.19444 !important;
+  font-size: 36px !important;
+  letter-spacing: -0.03em !important;
+  text-align: center;
+}
+
+.login-container {
+  display: flex !important;
+  flex: 1 1 0%;
+  flex-direction: column;
+}
+
+.login-label {
+  margin: 0px 0px 20px !important;
+  font-weight: 500 !important;
+  line-height: 1.19444 !important;
+  font-size: 36px !important;
+  letter-spacing: -0.03em !important;
+}
+
+.login-content {
+  flex: 1 1 0%;
+  display: flex;
+  align-items: center;
+  -webkit-box-align: center;
+  flex-direction: column;
+  margin-top: 32px;
+}
+
+.login-paper {
+  background-color: rgb(255, 255, 255) !important;
+  color: rgb(17, 24, 28) !important;
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms !important;
+  box-shadow: rgba(236, 238, 240, 0.5) 0px 10px 5px !important;
+  border-radius: 12px !important;
+  padding: 24px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 348px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.login-form-content {
+  flex-flow: row wrap !important;
+  min-width: 0px !important;
+  align-items: center;
+  -webkit-box-align: center;
+  justify-content: space-between;
+  -webkit-box-pack: justify;
+
+  p {
+    margin: 0;
+    line-height: 1.5;
+    font-size: 16px;
+    letter-spacing: -0.01em;
+    font-weight: 400;
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+.login-form-input {
+  flex-grow: 0;
+  -webkit-box-flex: 0;
+  flex-basis: auto;
+  width: calc(100% * 12 / var(--Grid-columns));
+
+  div {
+    display: inline-flex;
+    flex-direction: column;
+    position: relative;
+    min-width: 0px;
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+    vertical-align: top;
+    width: 100%;
+
+    div {
+      line-height: 1.4375em;
+      font-size: 16px;
+      letter-spacing: -0.01em;
+      font-weight: 400;
+      color: rgb(17, 24, 28);
+      box-sizing: border-box;
+      cursor: text;
+      display: inline-flex;
+      -webkit-box-align: center;
+      align-items: center;
+      width: 100%;
+      position: relative;
+      transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+      border-radius: 6px;
+      background-color: rgb(241, 243, 245);
+      overflow: hidden;
+
+      &:focus {
+        background-color: #f1f3f5;
+      }
+      &:hover {
+        background-color: #f1f3f5;
+      }
+
+      input {
+        padding: 12px;
+      }
+    }
+  }
+}

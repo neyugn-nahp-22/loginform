@@ -1,3 +1,4 @@
+import { Box, Stack, Typography } from '@mui/material';
 import { replace } from 'connected-react-router';
 import Cookies from 'js-cookie';
 import { useCallback, useState } from 'react';
@@ -9,15 +10,15 @@ import { Action } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { API_PATHS } from '../../../configs/api';
 import { ROUTES } from '../../../configs/routes';
-import logo from '../../../logo-420-x-108.png';
 import { ILoginParams } from '../../../models/auth';
 import { AppState } from '../../../redux/reducer';
 import { getErrorMessageResponse } from '../../../utils';
 import { ACCESS_TOKEN_KEY } from '../../../utils/constants';
 import { RESPONSE_STATUS_SUCCESS } from '../../../utils/httpResponseCode';
 import { fetchThunk } from '../../common/redux/thunk';
-import LoginFormV2 from '../components/LoginFormV2';
+import LoginForm from '../components/LoginForm';
 import { setUserInfo } from '../redux/authReducer';
+import './Login.scss'
 const LoginPage = () => {
     const dispatch = useDispatch<ThunkDispatch<AppState, null, Action<string>>>()
     const [loading, setLoading] = useState(false);
@@ -47,24 +48,15 @@ const LoginPage = () => {
             setErrorMessage(getErrorMessageResponse(json))
         }, [dispatch])
     return (
-        <div
-            className='container'
-            style={{
-                height: '100vh',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexDirection: 'column',
-            }
-            }
-        >
-            <img src={logo} alt="" style={{ maxWidth: "250px", margin: '32px' }} />
-            {/* <LoginForm onLogin={onLogin} loading={loading} errorMessage={errorMessage} /> */}
-            <LoginFormV2 onLogin={onLogin} loading={loading} errorMessage={errorMessage} />
+        <Stack className='login-wrapper'>
+            <Box className='login-logo' component='img' src='http://web-training.hrm.div4.pgtest.co/static/media/HR_Logo.99af50016f31f424a3f3a2330f173a06.svg'></Box>
+            <Typography className="login-title" variant='h3'>HR Management System</Typography>
+            <LoginForm onLogin={onLogin} loading={loading} errorMessage={errorMessage} />
+            {/* <LoginFormV2 onLogin={onLogin} loading={loading} errorMessage={errorMessage} /> */}
             <Link to={ROUTES.signUp}>
                 <FormattedMessage id='register' />
             </Link>
-        </div >
+        </Stack >
     )
 }
 
