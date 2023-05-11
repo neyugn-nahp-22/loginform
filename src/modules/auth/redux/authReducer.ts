@@ -1,30 +1,73 @@
-import { ActionType, createCustomAction, getType } from 'typesafe-actions';
-import { AuthToken, IUser } from '../../../models/user';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { userDetail, userLogin } from '../../../services/authService';
+import { push } from 'redux-first-history';
+import { ROUTES } from '../../../configs/routes';
+import Cookies from 'js-cookie';
+import { ACCESS_TOKEN_KEY } from '../../../utils/constants';
+import toastMessage from '../../../components/toast/Toast';
 
-export interface AuthState {
-  auth?: AuthToken;
-  user?: IUser;
+export interface initialAuthState {
+  loading: boolean;
+  userDetail: any;
 }
 
-export const setAuthorization = createCustomAction('auth/setAuthorization', (data: AuthToken) => ({
-  data,
-}));
+export const initialState: initialAuthState = {
+  loading: false,
+  userDetail: {},
+};
 
-export const setUserInfo = createCustomAction('auth/setUserInfo', (data: IUser) => ({
-  data,
-}));
+export const getToken = createAsyncThunk<void, any, {}>(
+  'auth/getTokenUser',
+  async (data, { rejectWithValue, dispatch }) => {
+    try {
+      const res = await userLogin(data);
+      if (res) {
+        dispatch(push(ROUTES.home));
+      }
+      return res.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  },
+);
 
-const actions = { setAuthorization, setUserInfo };
-
-type Action = ActionType<typeof actions>;
-
-export default function reducer(state: AuthState = {}, action: Action) {
-  switch (action.type) {
-    case getType(setAuthorization):
-      return { ...state, auth: action.data };
-    case getType(setUserInfo):
-      return { ...state, user: action.data };
-    default:
-      return state;
+export const getUserDetail = createAsyncThunk('auth/getUserDetail', async () => {
+  try {
+    const res = await userDetail();
+    return res.data;
+  } catch (error) {
+    console.log(error);
   }
-}
+});
+
+const authReducer = createSlice({
+  name: 'auth',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(getToken.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getToken.fulfilled, (state, action: any) => {
+      state.loading = false;
+      Cookies.set(ACCESS_TOKEN_KEY, action.payload.data.token);
+    });
+    builder.addCase(getToken.rejected, (state, action: any) => {
+      state.loading = false;
+      toastMessage('error', action.payload.message);
+    });
+    builder.addCase(getUserDetail.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getUserDetail.fulfilled, (state, action) => {
+      state.loading = false;
+      state.userDetail = action.payload.data;
+    });
+    builder.addCase(getUserDetail.rejected, (state, action: any) => {
+      state.loading = false;
+      toastMessage('error', action.payload.message);
+    });
+  },
+});
+
+export default authReducer.reducer;

@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import smoothscroll from 'smoothscroll-polyfill';
 import App from './App';
-import './index.css';
 import ConnectedIntlProvider from './modules/intl/components/ConnectedIntlProvider';
 import configureStore, { history } from './redux/configureStore';
 import reportWebVitals from './reportWebVitals';

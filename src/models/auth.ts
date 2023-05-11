@@ -1,12 +1,13 @@
 export interface ILoginParams {
-  email: string;
+  username: string;
   password: string;
-  rememberMe: boolean;
+  company_id: number;
 }
 
 export interface ILoginValidation {
-  email: string;
+  username: string;
   password: string;
+  company_id: number;
 }
 
 export interface ISignUpParams {
