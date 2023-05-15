@@ -19,12 +19,11 @@ const Header = () => {
                         </Typography>
                     </Box>
                     <Box className={cx("btn-home")}>
-                        <Button className={cx("change-language")}>
+                        <Button endIcon={<KeyboardArrowDownIcon />} className={cx("change-language")}>
                             <Box>
                                 <FlagIcon />
                                 <Typography component='span'>EN</Typography>
                             </Box>
-                            <Button endIcon={<KeyboardArrowDownIcon />}></Button>
                         </Button>
                         <IconButton className={cx('btn-user')}>
                             <Avatar>n</Avatar>
