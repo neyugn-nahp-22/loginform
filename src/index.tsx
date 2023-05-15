@@ -7,6 +7,7 @@ import App from './App';
 import ConnectedIntlProvider from './modules/intl/components/ConnectedIntlProvider';
 import configureStore, { history } from './redux/configureStore';
 import reportWebVitals from './reportWebVitals';
+import GlobalStyles from './components/GlobalStyles';
 
 smoothscroll.polyfill();
 
@@ -22,7 +23,9 @@ root.render(
     <PersistGate loading={null} persistor={persistor}>
       <ConnectedRouter history={history}>
         <ConnectedIntlProvider>
-          <App />
+          <GlobalStyles>
+            <App />
+          </GlobalStyles>
         </ConnectedIntlProvider>
       </ConnectedRouter>
     </PersistGate>

@@ -15,3 +15,12 @@ export const userDetail = () => {
     },
   });
 };
+
+export const getAllCompany = () => {
+  return axios
+    .get(API_PATHS.getCompany)
+    .then((res) => console.log(res.data))
+    .catch((error) => {
+      console.log(error);
+    });
+};

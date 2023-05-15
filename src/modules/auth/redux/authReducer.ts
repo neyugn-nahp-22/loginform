@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { userDetail, userLogin } from '../../../services/authService';
-import { push } from 'redux-first-history';
 import { ROUTES } from '../../../configs/routes';
 import Cookies from 'js-cookie';
 import { ACCESS_TOKEN_KEY } from '../../../utils/constants';
 import toastMessage from '../../../components/toast/Toast';
+import { replace } from 'connected-react-router';
 
 export interface initialAuthState {
   loading: boolean;
@@ -22,7 +22,7 @@ export const getToken = createAsyncThunk<void, any, {}>(
     try {
       const res = await userLogin(data);
       if (res) {
-        dispatch(push(ROUTES.home));
+        dispatch(replace(ROUTES.home));
       }
       return res.data;
     } catch (error: any) {
@@ -51,6 +51,7 @@ const authReducer = createSlice({
     builder.addCase(getToken.fulfilled, (state, action: any) => {
       state.loading = false;
       Cookies.set(ACCESS_TOKEN_KEY, action.payload.data.token);
+      toastMessage('success', action.payload.message);
     });
     builder.addCase(getToken.rejected, (state, action: any) => {
       state.loading = false;

@@ -1,18 +1,20 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { ROUTES } from '../../../configs/routes';
+import { Stack } from '@mui/material';
+import Content from '../../../layout/Content/Content';
+import Header from '../../../layout/Header/Header';
+import Sidebar from '../../../layout/Sidebar/Sidebar';
 
 interface Props { }
 
 const HomePage = (props: Props) => {
     return (
-        <div>
-            <div className='d-flex'>
-                <Link to={ROUTES.login}>LOGIN</Link>
-            </div>
-            <div><Link to={ROUTES.profile}>PROFILE</Link></div>
-            <div><Link to={ROUTES.todoList}>TODO</Link></div>
-        </div>
+        <Stack>
+            <Header />
+            <Stack style={{ flexDirection: "row", flex: "1 1 0%" }}>
+                <Sidebar />
+                <Content />
+            </Stack>
+        </Stack>
+
     )
 };
 

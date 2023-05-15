@@ -1,5 +1,5 @@
 import { toast } from 'react-hot-toast';
-import icons from '../../assets/icons';
+import icons from '../../assets';
 import classNames from 'classnames/bind';
 import styles from './Toast.module.scss';
 const cx = classNames.bind(styles);
@@ -14,7 +14,7 @@ function toastMessage(method: 'success' | 'error' | 'warn' | 'info' | 'loading',
       },
 
       className: cx('toast'),
-      icon: <img src={icons.success} alt="" />,
+      icon: <img src={icons.successIcon} alt="" />,
     });
   } else if (method === 'error') {
     return toast(message, {
@@ -25,7 +25,7 @@ function toastMessage(method: 'success' | 'error' | 'warn' | 'info' | 'loading',
         color: '#E5484D',
       },
       className: cx('toast'),
-      icon: <img src={icons.dager} alt="" />,
+      icon: <img src={icons.dangerIcon} alt="" />,
     });
   } else if (method === 'warn') {
     return toast(message, {
@@ -36,7 +36,7 @@ function toastMessage(method: 'success' | 'error' | 'warn' | 'info' | 'loading',
         color: '#E5484D',
       },
       className: cx('toast'),
-      icon: <img src={icons.dager} alt="" />,
+      icon: <img src={icons.dangerIcon} alt="" />,
     });
   } else if (method === 'info') {
     return toast(message, {
@@ -47,7 +47,7 @@ function toastMessage(method: 'success' | 'error' | 'warn' | 'info' | 'loading',
         color: '#E5484D',
       },
       className: cx('toast'),
-      icon: <img src={icons.dager} alt="" />,
+      icon: <img src={icons.dangerIcon} alt="" />,
     });
   }
   return;

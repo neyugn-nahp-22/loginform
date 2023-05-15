@@ -10,6 +10,10 @@ export interface ILoginValidation {
   company_id: number;
 }
 
+export interface IForgotPasswordValidation {
+  email: string;
+}
+
 export interface ISignUpParams {
   email: string;
   password: string;
