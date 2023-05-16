@@ -9,7 +9,7 @@ const HomePage = (props: Props) => {
     return (
         <Stack>
             <Header />
-            <Stack style={{ flexDirection: "row", flex: "1 1 0%" }}>
+            <Stack sx={{ flexDirection: "row", flex: "1 1 0%" }}>
                 <Sidebar />
                 <Content />
             </Stack>

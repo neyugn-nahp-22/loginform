@@ -1,10 +1,13 @@
 export const ROUTES = {
   home: '/home',
-  contact: '/contact',
   login: '/login',
-  signUp: '/sign-up',
-  todoList: '/todo',
-  product: '/product',
-  profile: '/profile',
   forgotPassword: '/forgotpassword',
+  attendance: '/home/attendance',
+  leave: '/home/leave',
+  payroll: '/home/payroll',
+  employee: '/home/employee',
+  user: '/home/user',
+  master: '/home/master',
+  globalsetting: '/home/globalsetting',
+  settings: '/home/settings',
 };
