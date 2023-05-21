@@ -22,7 +22,7 @@ export const getToken = createAsyncThunk<void, any, {}>(
     try {
       const res = await userLogin(data);
       if (res) {
-        dispatch(replace(ROUTES.home));
+        dispatch(replace(ROUTES.employee));
       }
       return res.data;
     } catch (error: any) {

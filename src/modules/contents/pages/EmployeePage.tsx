@@ -1,17 +1,28 @@
-import { Box, Button, Checkbox, Divider, Paper, Stack, Table, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
+import { Box, Button, Checkbox, CircularProgress, Divider, Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
+import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { TABLE_FIELD } from '../../../assets/data/data'
 import BreadcrumbComponent from '../../../components/BreadcrumbComponent/BreadcrumbComponent'
 import { AddIcon, DeleteIcon } from '../../../components/Icons'
 import SearchComponent from '../../../components/SearchField/SearchField'
 import { ROUTES } from '../../../configs/routes'
-import { TABLE_FIELD } from '../../../assets/data/data'
-import { useSelector } from 'react-redux'
-import { employeeSelector } from '../redux/EmployeeRedux/employeeSelector'
-import { useEffect, useState } from 'react'
-import { getAllEmployee } from '../../../services/employeeService'
-
+import TableEmployee from '../components/TableEmployee'
+import { UseEmployee } from '../hooks/UseEmployee'
+import { getEmployee } from '../redux/EmployeeRedux/employeeReducer'
 
 
 const EmployeePage = () => {
+    const dispatch = useDispatch()
+    const { listData, loading, currentPage, firstPage, lastPage, from, linkPage, nextPage, prevPage, to, totalEmployee, totalPage } = UseEmployee()
+
+    const [isChecked, setIsChecked] = useState(false)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => { dispatch<any>(getEmployee()) }, [])
+
+    const handleChecked = () => {
+        setIsChecked(!isChecked)
+    }
 
     return (
         <>
@@ -66,13 +77,31 @@ const EmployeePage = () => {
                         <TableContainer style={{ maxHeight: '525px', minHeight: '525px' }}>
                             <Table stickyHeader sx={{ minWidth: "750px" }}>
                                 <TableHead>
+                                    <TableRow></TableRow>
                                     <TableRow>
-                                        <TableCell padding='checkbox'>
-                                            <Checkbox color='success'></Checkbox>
+                                        <TableCell
+                                            sx={{
+                                                fontSize: "14px",
+                                                fontWeight: 600,
+                                                padding: "0px !important",
+                                                backgroundColor: "rgb(236, 238, 240) !important",
+                                                textAlign: "center",
+                                                borderTopLeftRadius: "8px",
+                                                width: "36px",
+                                                minWidth: "36px",
+                                                border: "1px solid white"
+                                            }}
+                                            padding='checkbox'>
+                                            <Checkbox sx={{
+                                                padding: '4px',
+                                                "&:hover": {
+                                                    backgroundColor: "rgba(48, 164, 108, 0.08)"
+                                                }
+                                            }} onChange={handleChecked} checked={isChecked} color='success'></Checkbox>
                                         </TableCell>
                                         {TABLE_FIELD.map((item, index) => (
                                             <TableCell
-                                                align={item.colspan === 2 ? 'center' : 'left'}
+                                                align={item.label === "Home Address" ? 'center' : 'left'}
                                                 sx={{
                                                     fontWeight: 600,
                                                     fontSize: "14px",
@@ -84,17 +113,41 @@ const EmployeePage = () => {
                                                     backgroundColor: "rgb(236, 238, 240)"
                                                 }}
                                                 key={index}
-                                                colSpan={item.colspan}>{item.name}</TableCell>
+                                                colSpan={item.label === "Home Address" ? 2 : 1}
+                                            >
+                                                {item.label}
+                                            </TableCell>
                                         ))}
                                     </TableRow>
                                 </TableHead>
+                                <TableBody>
+                                    {loading && (
+                                        <Box sx={{ position: "absolute", inset: "0px", display: 'flex', justifyContent: 'center', alignItems: "center", backgroundColor: "rgba(223, 227, 230, 0.3)", transition: "all 0.3s ease 0s" }}>
+                                            <CircularProgress sx={{ width: "32px", height: "32px", color: "rgb(0, 145, 255)" }} />
+                                        </Box>
+                                    )}
+                                    {listData.map((data: any, key: number) => (
+                                        <TableEmployee data={data} key={key} checked={isChecked} />
+                                    ))
+                                    }
+                                </TableBody>
                             </Table>
                         </TableContainer>
                     </Box>
                     <Divider />
-                    <Box></Box>
+                    <Box>
+                        <Box>
+                            <Box>
+                                <Pagination
+                                    count={totalPage ? totalPage : 1}
+                                    showFirstButton
+                                    showLastButton
+                                />
+                            </Box>
+                        </Box>
+                    </Box>
                 </Box>
-            </Paper>
+            </Paper >
         </>
     )
 }
