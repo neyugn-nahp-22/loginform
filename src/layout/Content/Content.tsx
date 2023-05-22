@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom'
 import EmployeePage from '../../modules/contents/pages/EmployeePage'
 import { ROUTES } from '../../configs/routes'
 import { Box, Stack } from '@mui/material'
+import CreatePage from '../../modules/function/pages/CreatePage'
 
 const Content = () => {
     return (
@@ -11,8 +12,11 @@ const Content = () => {
             <Box sx={{ maxWidth: "1170px", flex: "1 1 0%", margin: "30px 46px 0px" }}>
                 {/* <Routes /> */}
                 <Switch>
-                    <Route path={ROUTES.employee}>
+                    {/* <Route path={ROUTES.employee}>
                         <EmployeePage />
+                    </Route> */}
+                    <Route path={ROUTES.add}>
+                        <CreatePage />
                     </Route>
                 </Switch>
             </Box>

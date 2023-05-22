@@ -7,7 +7,7 @@ interface Props { }
 
 const HomePage = (props: Props) => {
     return (
-        <Stack>
+        <Stack sx={{ display: 'flex', flexDirection: "column", backgroundColor: "rgb(248, 249, 250)", minHeight: '100vh' }}>
             <Header />
             <Stack sx={{ flexDirection: "row", flex: "1 1 0%" }}>
                 <Sidebar />

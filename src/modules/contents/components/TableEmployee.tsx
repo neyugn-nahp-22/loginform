@@ -2,11 +2,7 @@ import { Checkbox, TableCell, TableRow } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { TABLE_FIELD, Type } from '../../../assets/data/data';
 
-interface Props {
-    data: any,
-    checked: boolean,
-    key: number
-}
+
 
 const styleTableCell = {
     color: "rgb(104, 112, 118)",
@@ -16,8 +12,7 @@ const styleTableCell = {
     fontSize: "12px"
 }
 
-const TableEmployee = (props: Props) => {
-    const { data, checked, key } = props
+const TableEmployee = ({ data, checked }: any) => {
     const [isChecked, setIsChecked] = useState(false)
 
     const handleChecked = () => {
@@ -27,7 +22,7 @@ const TableEmployee = (props: Props) => {
     useEffect(() => { setIsChecked(checked) }, [checked])
 
     return (
-        <TableRow sx={{ backgroundColor: "rgb(248, 249, 250)", opacity: 1 }} hover key={key}>
+        <TableRow sx={{ backgroundColor: "rgb(248, 249, 250)", opacity: 1 }} hover>
             <TableCell sx={{
                 lineHeight: 1.35714,
                 fontSize: "14px",
@@ -102,12 +97,14 @@ const TableEmployee = (props: Props) => {
 
                 const value = data[item.id];
 
-                return <TableCell
-                    sx={styleTableCell}
-                    key={index}
-                >
-                    {value}
-                </TableCell>
+                return (
+                    <TableCell
+                        sx={styleTableCell}
+                        key={index}
+                    >
+                        {value}
+                    </TableCell>
+                )
             })}
         </TableRow>
     )

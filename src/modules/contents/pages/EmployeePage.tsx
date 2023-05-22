@@ -9,6 +9,8 @@ import { ROUTES } from '../../../configs/routes'
 import TableEmployee from '../components/TableEmployee'
 import { UseEmployee } from '../hooks/UseEmployee'
 import { getEmployee } from '../redux/EmployeeRedux/employeeReducer'
+import { useHistory } from 'react-router'
+import { FormattedMessage } from 'react-intl'
 
 
 const EmployeePage = () => {
@@ -16,12 +18,17 @@ const EmployeePage = () => {
     const { listData, loading, currentPage, firstPage, lastPage, from, linkPage, nextPage, prevPage, to, totalEmployee, totalPage } = UseEmployee()
 
     const [isChecked, setIsChecked] = useState(false)
+    const history = useHistory()
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => { dispatch<any>(getEmployee()) }, [])
 
     const handleChecked = () => {
         setIsChecked(!isChecked)
+    }
+
+    const handleButtonClick = () => {
+        history.push(ROUTES.add)
     }
 
     return (
@@ -35,7 +42,7 @@ const EmployeePage = () => {
                     letterSpacing: "-0.03em",
                     color: "rgb(17, 24, 28)"
                 }}>
-                    Employee Management
+                    <FormattedMessage id="employeeManagement" />
                 </Typography>
                 <SearchComponent />
             </Box>
@@ -53,6 +60,7 @@ const EmployeePage = () => {
                     <Box sx={{ flexShrink: 0 }}>
                         <Stack sx={{ display: "flex", flexDirection: "row", gap: "4px" }}>
                             <Button
+                                onClick={handleButtonClick}
                                 sx={{
                                     appearance: "none", fontWeight: 400, textTransform: "capitalize",
                                     color: "rgb(0, 145, 255)", borderRadius: "6px", minWidth: "90px",
@@ -61,6 +69,7 @@ const EmployeePage = () => {
                                 <Typography sx={{ fontSize: "14px", lineHeight: 1.35714 }} variant='body2'>Add</Typography>
                             </Button>
                             <Button
+                                disabled={isChecked ? false : true}
                                 sx={{
                                     appearance: "none", fontWeight: 400, textTransform: "capitalize",
                                     color: "rgb(229, 72, 77)", borderRadius: "6px", minWidth: "90px",
@@ -121,18 +130,18 @@ const EmployeePage = () => {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {loading && (
-                                        <Box sx={{ position: "absolute", inset: "0px", display: 'flex', justifyContent: 'center', alignItems: "center", backgroundColor: "rgba(223, 227, 230, 0.3)", transition: "all 0.3s ease 0s" }}>
-                                            <CircularProgress sx={{ width: "32px", height: "32px", color: "rgb(0, 145, 255)" }} />
-                                        </Box>
-                                    )}
-                                    {listData.map((data: any, key: number) => (
-                                        <TableEmployee data={data} key={key} checked={isChecked} />
+                                    {listData.map((data: any, index: number) => (
+                                        <TableEmployee data={data} key={index} checked={isChecked} />
                                     ))
                                     }
                                 </TableBody>
                             </Table>
                         </TableContainer>
+                        {loading && (
+                            <Box sx={{ position: "absolute", inset: "0px", display: 'flex', justifyContent: 'center', alignItems: "center", backgroundColor: "rgba(223, 227, 230, 0.3)", transition: "all 0.3s ease 0s" }}>
+                                <CircularProgress sx={{ width: "32px", height: "32px", color: "rgb(0, 145, 255)" }} />
+                            </Box>
+                        )}
                     </Box>
                     <Divider />
                     <Box>

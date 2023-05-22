@@ -10,4 +10,5 @@ export const ROUTES = {
   master: '/home/master',
   globalsetting: '/home/globalsetting',
   settings: '/home/settings',
+  add: '/home/employee/create-or-update',
 };
