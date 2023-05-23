@@ -1,9 +1,7 @@
-import React from 'react'
-import { Routes } from '../../Routes'
-import { Route, Switch } from 'react-router-dom'
-import EmployeePage from '../../modules/contents/pages/EmployeePage'
-import { ROUTES } from '../../configs/routes'
 import { Box, Stack } from '@mui/material'
+import { Route, Switch } from 'react-router-dom'
+import { ROUTES } from '../../configs/routes'
+import EmployeePage from '../../modules/contents/pages/EmployeePage'
 import CreatePage from '../../modules/function/pages/CreatePage'
 
 const Content = () => {

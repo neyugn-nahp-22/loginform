@@ -2,6 +2,8 @@ import { lazy, Suspense } from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import { ROUTES } from './configs/routes';
 import ProtectedRoute from './modules/common/components/ProtectedRoute';
+import PublicRoute from './modules/common/components/PublicRoute';
+import { Backdrop, CircularProgress } from '@mui/material';
 
 const HomePage = lazy(() => import('./modules/home/pages/HomePage'));
 const LoginPage = lazy(() => import('./modules/auth/pages/LoginPage'));
@@ -11,16 +13,24 @@ const CreatePage = lazy(() => import("./modules/function/pages/CreatePage"))
 
 interface Props { }
 
+const Loading = () => {
+    return (
+        <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={true}>
+            <CircularProgress color="inherit" />
+        </Backdrop>
+    )
+}
+
 export const Routes = (props: Props) => {
     const location = useLocation();
     return (
-        <Suspense fallback={<div>Loading.....</div>}>
+        <Suspense fallback={<Loading />}>
             <Switch location={location}>
-                <Route path={ROUTES.login} component={LoginPage} />
+                <PublicRoute path={ROUTES.login} component={LoginPage} />
                 <ProtectedRoute path={ROUTES.home} component={HomePage} />
-                <Route path={ROUTES.forgotPassword} component={ForgotPage} />
-                <Route path={ROUTES.employee} component={EmployeePape} />
-                <Route path={ROUTES.add} component={CreatePage} />
+                <PublicRoute path={ROUTES.forgotPassword} component={ForgotPage} />
+                <ProtectedRoute path={ROUTES.employee} component={EmployeePape} />
+                <ProtectedRoute path={ROUTES.add} component={CreatePage} />
                 <Route path="/" component={LoginPage} />
             </Switch>
         </Suspense>

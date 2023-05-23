@@ -2,7 +2,8 @@ import { TabContext, TabPanel } from '@mui/lab'
 import { Box, Button, Divider, Paper, Stack, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
-import PersonalInformation from './PersonalInformation'
+import PersonalInformation from '../layouts/PersonalInformation'
+import EmploymentDetailsComponent from '../layouts/EmploymentDetails'
 
 export const MENU_CREATE = [
     {
@@ -19,6 +20,7 @@ export const MENU_CREATE = [
     {
         id: 2,
         name: "employmentDetails",
+        component: <EmploymentDetailsComponent />,
         label: "Employment Details",
     },
     {

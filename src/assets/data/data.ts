@@ -39,3 +39,75 @@ export const Type = {
     name: 'Contract',
   },
 };
+
+export const GENDER = [
+  {
+    value: 'Male',
+    id: 1,
+  },
+  {
+    value: 'Female',
+    id: 2,
+  },
+];
+
+export const MARRIAGE_STATUS = [
+  {
+    value: 'N/A',
+    id: 1,
+  },
+  {
+    value: 'Married with 1 kid',
+    id: 2,
+  },
+  {
+    value: 'Single',
+    id: 3,
+  },
+  {
+    value: 'Married',
+    id: 4,
+  },
+];
+
+export const DEPARTMENT = [
+  {
+    value: 'N/A',
+    id: 1,
+  },
+  {
+    value: 'Developer',
+    id: 2,
+  },
+  {
+    value: 'Quality Controjk',
+    id: 3,
+  },
+  {
+    value: 'Maintenance',
+    id: 4,
+  },
+  {
+    value: 'Business Development',
+    id: 5,
+  },
+];
+
+export const POSITION = [
+  {
+    value: 'N/A',
+    id: 1,
+  },
+  {
+    value: 'Junior',
+    id: 2,
+  },
+  {
+    value: 'Vice Manager',
+    id: 3,
+  },
+  {
+    value: 'Manager',
+    id: 4,
+  },
+];

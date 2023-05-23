@@ -29,7 +29,7 @@ const company = [
     }
 ]
 const LoginForm = (props: Props) => {
-    const { onLogin, loading, errorMessage } = props
+    const { onLogin, loading } = props
 
     const [showPassword, setShowPassword] = useState(false);
 

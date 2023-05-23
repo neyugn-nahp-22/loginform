@@ -9,6 +9,10 @@
   "requirePassword": "Please enter password",
   "requireFactory": "Please choose factory",
   "requireEmail": "Please enter your email",
+  "requireName": "Please input Name",
+  "requireGender": "Please input Gender",
+  "requireKTP": "Please input KTP No",
+  "requireNcid": "Please input National Card ID",
   "forgotPassWord": "Forgot Your Password?",
   "titlePageForgotPassword": "Forgot password",
   "labelForgotEmail": "Your work email",
@@ -45,5 +49,7 @@
   "bankName": "Bank Name",
   "familyCardNumber": "Family Card Number",
   "safetyInsuranceNo": "Safety Insurance No.",
-  "healthInsuranceNo": "Health Insurance No."
+  "healthInsuranceNo": "Health Insurance No.",
+  "department": "Department",
+  "position": "Position"
 }

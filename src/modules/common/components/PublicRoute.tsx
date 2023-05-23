@@ -10,7 +10,7 @@ const ProtectedRoute = (props: Props) => {
     const { ...rest } = props;
     const auth = Cookies.get(ACCESS_TOKEN_KEY);
 
-    return auth ? <Route {...rest} /> : <Redirect to={{ pathname: ROUTES.login }} />
+    return !auth ? <Route {...rest} /> : <Redirect to={{ pathname: ROUTES.home }} />
 };
 
 export default ProtectedRoute;

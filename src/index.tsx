@@ -4,16 +4,16 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import smoothscroll from 'smoothscroll-polyfill';
 import App from './App';
+import GlobalStyles from './components/GlobalStyles';
 import ConnectedIntlProvider from './modules/intl/components/ConnectedIntlProvider';
 import configureStore, { history } from './redux/configureStore';
 import reportWebVitals from './reportWebVitals';
-import GlobalStyles from './components/GlobalStyles';
 
 smoothscroll.polyfill();
 
 const { store, persistor } = configureStore({});
 
-// store.dispatch(setLocale('vi'));
+// store.dispatch(setLocale('en'));
 
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)

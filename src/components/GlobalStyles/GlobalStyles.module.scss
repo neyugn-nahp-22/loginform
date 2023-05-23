@@ -1,7 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@font-face {
+  font-family: SofiaPro;
+  src: url('../../assets/SVN-SofiaPro-Regular.5b3d1be43dce9b034c9f.woff2');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: SofiaPro;
+  src: url('../../assets/SVN-SofiaPro-Medium.f29daefe0725dbae93c7.woff2');
+  font-weight: 500;
+}
 
 :root {
-  --font-family: 'Poppins', sans-serif;
+  --font-family: 'SofiaPro';
 }
 
 * {
