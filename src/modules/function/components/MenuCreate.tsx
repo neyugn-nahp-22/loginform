@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import PersonalInformation from '../layouts/PersonalInformation'
 import EmploymentDetailsComponent from '../layouts/EmploymentDetails'
+import ContractInformation from '../layouts/ContractInformation'
 
 export const MENU_CREATE = [
     {
@@ -15,6 +16,7 @@ export const MENU_CREATE = [
     {
         id: 1,
         name: "contractInformation",
+        component: <ContractInformation />,
         label: "Contract Information",
     },
     {

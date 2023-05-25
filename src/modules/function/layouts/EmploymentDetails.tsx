@@ -21,6 +21,7 @@ const EmploymentDetailsComponent = () => {
                 label='department'
                 name="department"
                 require={false}
+                defaultValue={''}
                 control={control}
                 placeholder='Choose Department'
                 data={DEPARTMENT}
@@ -29,6 +30,7 @@ const EmploymentDetailsComponent = () => {
                 label='position'
                 name="position"
                 require={false}
+                defaultValue={''}
                 control={control}
                 placeholder='Choose Position'
                 data={POSITION}

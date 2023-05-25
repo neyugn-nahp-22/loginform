@@ -6,6 +6,7 @@ import { ICreateParams, ICreateValidation } from '../../../models/employee'
 import InputField from '../components/CreateInputField'
 import SelectField from '../components/CreateSelectField'
 import DatePickerField from '../components/DatePickerComponent'
+import { CalendarIcon, ShowMoreIcon } from '../../../components/Icons'
 
 const PersonalInformation = () => {
 
@@ -38,9 +39,12 @@ const PersonalInformation = () => {
                     label='gender'
                     name="gender"
                     require={true}
+                    defaultValue={''}
                     control={control}
                     placeholder='Choose Gender'
                     data={GENDER}
+                    errors={errors.gender}
+                    helperText="requireGender"
                 />
                 <InputField
                     label='motherName'
@@ -53,12 +57,11 @@ const PersonalInformation = () => {
                 <DatePickerField
                     label='dateofbirth'
                     name='dob'
+                    type='text'
                     require={true}
                     control={control}
-                    type='text'
                     errors={errors.dob ? true : false}
                     helperText={errors.dob ? <FormattedMessage id="requireName" /> : null}
-                    InputProps={{ disableUnderline: true }}
                 />
                 <InputField
                     label='placeofbirth'
@@ -126,6 +129,7 @@ const PersonalInformation = () => {
                     label='marriageStatus'
                     name="marriageStatus"
                     require={false}
+                    defaultValue={''}
                     control={control}
                     placeholder='Choose Marriage Status'
                     data={MARRIAGE_STATUS}

@@ -51,5 +51,12 @@
   "safetyInsuranceNo": "Safety Insurance No.",
   "healthInsuranceNo": "Health Insurance No.",
   "department": "Department",
-  "position": "Position"
+  "position": "Position",
+  "dateStart": "Date Start",
+  "Type": "Employee Type",
+  "requireFile": "Please upload pdf, png, xlsx, docx file format!",
+  "contractDate": "Contract Date",
+  "contractName": "Contract Name",
+  "upload": "Upload File",
+  "add": "Add"
 }

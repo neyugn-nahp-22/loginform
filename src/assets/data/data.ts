@@ -42,12 +42,12 @@ export const Type = {
 
 export const GENDER = [
   {
-    value: 'Male',
     id: 1,
+    value: 'Male',
   },
   {
-    value: 'Female',
     id: 2,
+    value: 'Female',
   },
 ];
 
@@ -110,4 +110,26 @@ export const POSITION = [
     value: 'Manager',
     id: 4,
   },
+];
+
+export const EMPLOYEE_TYPE = [
+  {
+    id: 1,
+    value: 'Permanent',
+  },
+  {
+    id: 2,
+    value: 'Part-time',
+  },
+  {
+    id: 3,
+    value: 'Contract',
+  },
+];
+
+export const TABLE_CONTRACT = [
+  { label: 'No', minWidth: '50px' },
+  { label: 'Contract Name', minWidth: '150px' },
+  { label: 'Sign Date', minWidth: '150px' },
+  { label: 'Action', minWidth: '294px' },
 ];

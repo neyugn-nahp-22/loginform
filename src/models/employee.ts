@@ -17,6 +17,9 @@ export interface ICreateParams {
   family_card_number: string;
   safety_insurance_no: string;
   health_insurance_no: string;
+  contract_start_date: string;
+  type: string;
+  contract_date: string;
 }
 
 export interface ICreateValidation {

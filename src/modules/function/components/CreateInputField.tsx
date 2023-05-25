@@ -17,6 +17,7 @@ interface Props {
 
 const InputField = (props: Props) => {
     const { label, control, errors, name, type, helperText, InputProps, require } = props
+
     return (
         <Grid2 sx={{ flexFlow: "row wrap", alignItems: 'center', justifyContent: 'space-between' }} container spacing={1}>
             <Grid2 xs={12} sm={12} md={5} lg={4.8} xl={4}>
@@ -57,10 +58,18 @@ const InputField = (props: Props) => {
                                 ".Mui-error": {
                                     border: "1px solid rgb(243, 174, 175)",
                                     backgroundColor: 'rgb(255, 239, 239)',
+                                    "&:hover": {
+                                        border: "1px solid rgb(243, 174, 175)",
+                                        backgroundColor: 'rgb(255, 239, 239)',
+                                    }
                                 },
                                 ".MuiFormHelperText-root": {
                                     border: 'none',
-                                    backgroundColor: "transparent"
+                                    backgroundColor: "transparent",
+                                    "&:hover": {
+                                        border: 'none',
+                                        backgroundColor: "transparent",
+                                    }
                                 }
                             }}
                         />
