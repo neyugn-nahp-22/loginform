@@ -1,7 +1,7 @@
 import { Box, Button, Divider, Stack, Table, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import DatePickerField from '../components/DatePickerComponent'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { ICreateParams } from '../../../models/employee'
 import { FormattedMessage } from 'react-intl'
 import SelectField from '../components/CreateSelectField'
@@ -11,6 +11,13 @@ import { UploadIcon } from '../../../components/Icons'
 
 const ContractInformation = () => {
     const { control, handleSubmit, formState: { errors } } = useForm<ICreateParams>({ mode: "onBlur" })
+    const fileInputRef = useRef(null)
+    const [fileName, setFileName] = useState('')
+
+    const handleFileUpload = (e: any) => {
+        const file = e.target.file[0];
+        console.log(file);
+    }
     return (
         <Box sx={{ paddingLeft: "20px", paddingRight: "20px" }}>
             <Stack sx={{ flexFlow: "column wrap", maxWidth: "400px", width: '100%', paddingBottom: '20px', gap: "10px" }} component='form'>
@@ -21,7 +28,7 @@ const ContractInformation = () => {
                     name="contract_start_date"
                     type='text'
                     errors={errors.contract_start_date}
-                    helperText={<FormattedMessage id="requiredName" />}
+                    helperText={errors.contract_start_date ? <FormattedMessage id="requiredName" /> : ""}
                 />
                 <SelectField
                     label='Type'
@@ -72,9 +79,29 @@ const ContractInformation = () => {
                                     minWidth: '195px',
                                     border: "1px dashed"
                                 }} size='large' disableElevation startIcon={<UploadIcon />}>
-                                    <FormattedMessage id="upload" />
+                                    <label className="">
+                                        <FormattedMessage id="uploadFile" />
+                                        <Controller
+                                            name="document"
+                                            control={control}
+                                            rules={{ required: true }}
+                                            render={({ field }: any) => {
+                                                return (
+                                                    <input
+                                                        type="file"
+                                                        onChange={(e: any) => {
+                                                            setFileName(e.target.files[0].name);
+                                                            field.onChange(e.target.files[0]);
+                                                        }}
+                                                        hidden
+                                                    />
+                                                );
+                                            }}
+                                        />
+                                    </label>
                                 </Button>
                             </Box>
+
                             <Button sx={{
                                 textTransform: 'capitalize',
                                 padding: '8px 22px',
@@ -88,7 +115,11 @@ const ContractInformation = () => {
                                     backgroundColor: 'rgb(54, 215, 180)'
                                 }
                             }}
-                                variant='contained' size='large' disableElevation type='submit'>
+                                variant='contained'
+                                size='large'
+                                disableElevation
+                                type='submit'
+                            >
                                 <FormattedMessage id="add" />
                             </Button>
                         </Stack>

@@ -5,6 +5,8 @@ import { FormattedMessage } from 'react-intl'
 import PersonalInformation from '../layouts/PersonalInformation'
 import EmploymentDetailsComponent from '../layouts/EmploymentDetails'
 import ContractInformation from '../layouts/ContractInformation'
+import SalaryWages from '../layouts/SalaryWages'
+import Other from '../layouts/Other'
 
 export const MENU_CREATE = [
     {
@@ -28,12 +30,14 @@ export const MENU_CREATE = [
     {
         id: 3,
         name: "salary&Wages",
+        component: <SalaryWages />,
         label: 'Salary & Wages'
     },
     {
         id: 4,
         name: "others",
-        label: "Others"
+        component: <Other />,
+        label: "Others",
     },
 ]
 

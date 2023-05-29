@@ -5,4 +5,6 @@ export const API_PATHS = {
   userDetail: `${APIHost}/user/detail`,
   getCompany: `${APIHost}/company`,
   getEmployee: `${APIHost}/employee`,
+  benefit: `${APIHost}/benefit`,
+  grade: `${APIHost}/grade`
 };

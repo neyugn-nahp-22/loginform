@@ -13,17 +13,15 @@ interface Props {
     helperText?: any,
     InputProps: any,
     require: boolean,
-    hidden?: boolean,
-    multiline?: boolean,
-    rows?: number
+    hidden?: boolean
 }
 
-const InputField = (props: Props) => {
-    const { label, control, errors, name, type, helperText, InputProps, require, hidden, multiline, rows } = props
+const InputFieldSalary = (props: Props) => {
+    const { label, control, errors, name, type, helperText, InputProps, require, hidden } = props
 
     return (
         <Grid2 sx={{ flexFlow: "row wrap", alignItems: 'center', justifyContent: 'space-between' }} container spacing={1}>
-            <Grid2 xs={12} sm={12} md={5} lg={4.8} xl={4}>
+            <Grid2 xs={12} sm={12} md={5} lg={4.8}>
                 <Typography sx={{ display: 'flex', flexWrap: "wrap" }}>
                     <FormattedMessage id={label} />
                     {
@@ -33,7 +31,7 @@ const InputField = (props: Props) => {
                     }
                 </Typography>
             </Grid2>
-            <Grid2 xs={12} sm={12} md={7} lg={7.2} xl={8}>
+            <Grid2 xs={12} sm={12} md={7} lg={7.2} >
                 <Controller
                     name={name}
                     control={control}
@@ -50,18 +48,12 @@ const InputField = (props: Props) => {
                             error={errors}
                             helperText={helperText}
                             InputProps={InputProps}
-                            multiline={multiline}
-                            rows={rows}
                             sx={{
                                 ".MuiInputBase-root": {
                                     borderRadius: '6px',
                                     backgroundColor: "rgb(241, 243, 245)",
                                     overflow: "hidden",
-                                    padding: '5px',
                                     "input": {
-                                        padding: "12px"
-                                    },
-                                    "textarea": {
                                         padding: "12px"
                                     }
                                 },
@@ -90,4 +82,4 @@ const InputField = (props: Props) => {
     )
 }
 
-export default InputField
+export default InputFieldSalary

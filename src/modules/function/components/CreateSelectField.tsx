@@ -1,7 +1,8 @@
-import { FilledInput, FormHelperText, MenuItem, Select, Typography } from '@mui/material';
+import { FilledInput, FormHelperText, InputAdornment, MenuItem, Select, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { Controller } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 
 interface Props {
@@ -13,11 +14,13 @@ interface Props {
     placeholder: string,
     data: any,
     helperText?: any,
-    errors?: any
+    errors?: any,
+    multiple?: boolean,
+    disable?: boolean
 }
 
 const SelectField = (props: Props) => {
-    const { label, control, name, require, defaultValue, placeholder, data, helperText, errors } = props
+    const { label, control, name, require, defaultValue, placeholder, data, helperText, errors, multiple, disable } = props
     return (
         <Grid2 sx={{ flexFlow: "row wrap", alignItems: 'center', justifyContent: 'space-between' }} container spacing={1}>
             <Grid2 xs={12} sm={12} md={5} lg={4.8} xl={4}>
@@ -45,6 +48,9 @@ const SelectField = (props: Props) => {
                                 input={<FilledInput />}
                                 fullWidth
                                 disableUnderline
+                                disabled={disable}
+                                multiple={multiple}
+                                IconComponent={KeyboardArrowDownIcon}
                                 error={errors}
                                 sx={{
                                     backgroundColor: "rgb(241, 243, 245)",
@@ -77,7 +83,7 @@ const SelectField = (props: Props) => {
                                     if (!selected) {
                                         return <Typography>{placeholder}</Typography>
                                     }
-                                    return data.find((item: any) => item.id === selected)?.value
+                                    return data.find((item: any) => item.id === selected)?.name
                                 }}
                             >
 
@@ -105,7 +111,7 @@ const SelectField = (props: Props) => {
                                                 backgroundColor: "transparent",
                                             }
                                         }}
-                                        key={index} value={item.id}>{item.value}</MenuItem>
+                                        key={index} value={item.id}>{item.name}</MenuItem>
                                 ))}
                             </Select>
                             {errors && (

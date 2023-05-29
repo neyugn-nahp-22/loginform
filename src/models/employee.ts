@@ -20,6 +20,7 @@ export interface ICreateParams {
   contract_start_date: string;
   type: string;
   contract_date: string;
+  document: string;
 }
 
 export interface ICreateValidation {

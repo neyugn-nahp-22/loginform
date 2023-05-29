@@ -27,15 +27,15 @@ export const TABLE_FIELD = [
 
 export const Type = {
   Permanent: {
-    value: 0,
+    id: 0,
     name: 'Pernament',
   },
   PartTime: {
-    value: 1,
+    id: 1,
     name: 'PartTime',
   },
   Contract: {
-    value: 2,
+    id: 2,
     name: 'Contract',
   },
 };
@@ -43,71 +43,71 @@ export const Type = {
 export const GENDER = [
   {
     id: 1,
-    value: 'Male',
+    name: 'Male',
   },
   {
     id: 2,
-    value: 'Female',
+    name: 'Female',
   },
 ];
 
 export const MARRIAGE_STATUS = [
   {
-    value: 'N/A',
+    name: 'N/A',
     id: 1,
   },
   {
-    value: 'Married with 1 kid',
+    name: 'Married with 1 kid',
     id: 2,
   },
   {
-    value: 'Single',
+    name: 'Single',
     id: 3,
   },
   {
-    value: 'Married',
+    name: 'Married',
     id: 4,
   },
 ];
 
 export const DEPARTMENT = [
   {
-    value: 'N/A',
+    name: 'N/A',
     id: 1,
   },
   {
-    value: 'Developer',
+    name: 'Developer',
     id: 2,
   },
   {
-    value: 'Quality Controjk',
+    name: 'Quality Controjk',
     id: 3,
   },
   {
-    value: 'Maintenance',
+    name: 'Maintenance',
     id: 4,
   },
   {
-    value: 'Business Development',
+    name: 'Business Development',
     id: 5,
   },
 ];
 
 export const POSITION = [
   {
-    value: 'N/A',
+    name: 'N/A',
     id: 1,
   },
   {
-    value: 'Junior',
+    name: 'Junior',
     id: 2,
   },
   {
-    value: 'Vice Manager',
+    name: 'Vice Manager',
     id: 3,
   },
   {
-    value: 'Manager',
+    name: 'Manager',
     id: 4,
   },
 ];
@@ -115,15 +115,15 @@ export const POSITION = [
 export const EMPLOYEE_TYPE = [
   {
     id: 1,
-    value: 'Permanent',
+    name: 'Permanent',
   },
   {
     id: 2,
-    value: 'Part-time',
+    name: 'Part-time',
   },
   {
     id: 3,
-    value: 'Contract',
+    name: 'Contract',
   },
 ];
 
@@ -132,4 +132,11 @@ export const TABLE_CONTRACT = [
   { label: 'Contract Name', minWidth: '150px' },
   { label: 'Sign Date', minWidth: '150px' },
   { label: 'Action', minWidth: '294px' },
+];
+
+export const TABLE_OTHERS = [
+  { label: 'No', minWidth: '50px' },
+  { label: 'Document Name', minWidth: '345px' },
+  { label: 'Created At', minWidth: '345px' },
+  { label: 'Action', minWidth: '345px' },
 ];

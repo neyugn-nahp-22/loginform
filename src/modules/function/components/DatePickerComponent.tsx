@@ -42,6 +42,8 @@ const DatePickerField = (props: Props) => {
                         <DatePicker
                             selected={field.value}
                             onChange={(date) => field.onChange(date)}
+                            popperPlacement="bottom-start"
+                            dateFormat='yyyy-MM-dd'
                             customInput={
                                 <TextField
                                     {...field}
@@ -84,7 +86,7 @@ const DatePickerField = (props: Props) => {
                                 />
                             }
                             renderCustomHeader={({ date, decreaseMonth, increaseMonth }) => (
-                                <Stack sx={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: "center", padding: "4px 8px" }}>
+                                <Stack sx={{ minWidth: '350px', flexDirection: 'row', justifyContent: 'space-between', alignItems: "center", padding: "4px 8px" }}>
                                     <IconButton sx={{ marginRight: '8px', color: "rgb(215, 219, 223)", width: '32px', height: "32px" }} onClick={decreaseMonth} size='small'>
                                         <PreviousIcon />
                                     </IconButton>

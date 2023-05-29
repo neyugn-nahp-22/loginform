@@ -10,3 +10,19 @@ export const getAllEmployee = () => {
     },
   });
 };
+
+export const getBenefit = () => {
+  return axios.get(API_PATHS.benefit, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get(ACCESS_TOKEN_KEY)}`,
+    },
+  });
+};
+
+export const getGrade = () => {
+  return axios.get(API_PATHS.grade, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get(ACCESS_TOKEN_KEY)}`,
+    },
+  });
+};

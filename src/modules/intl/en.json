@@ -57,6 +57,17 @@
   "requireFile": "Please upload pdf, png, xlsx, docx file format!",
   "contractDate": "Contract Date",
   "contractName": "Contract Name",
-  "upload": "Upload File",
-  "add": "Add"
+  "uploadFile": "Upload File",
+  "upload": "Upload",
+  "add": "Add",
+  "basicSalary": "Basic Salary",
+  "salaryAudit": "Basic Salary (Audit)",
+  "safetyAmount": "Safety Insurance Amount",
+  "healthyAmount": "Healthy Insurance Amount",
+  "mealAllowance": "Meal Allowance",
+  "grade": "Grade",
+  "benefit": "Benefit",
+  "remark": "Remark",
+  "hrmAccount": "HRM User Account",
+  "document": "Document"
 }
