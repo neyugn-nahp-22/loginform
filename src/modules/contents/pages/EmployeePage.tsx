@@ -1,30 +1,73 @@
 import { Box, Button, Checkbox, CircularProgress, Divider, Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
-import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { ChangeEvent, useEffect, useState } from 'react'
+import { FormattedMessage } from 'react-intl'
+import { useHistory, useLocation } from 'react-router'
+
 import { TABLE_FIELD } from '../../../assets/data/data'
 import BreadcrumbComponent from '../../../components/BreadcrumbComponent/BreadcrumbComponent'
 import { AddIcon, DeleteIcon } from '../../../components/Icons'
 import SearchComponent from '../../../components/SearchField/SearchField'
 import { ROUTES } from '../../../configs/routes'
+import { getEmployeeByPage } from '../../../services/employeeService'
 import TableEmployee from '../components/TableEmployee'
-import { UseEmployee } from '../hooks/UseEmployee'
-import { getEmployee } from '../redux/EmployeeRedux/employeeReducer'
-import { useHistory } from 'react-router'
-import { FormattedMessage } from 'react-intl'
 
+import classNames from 'classnames/bind'
+import styles from '../../function/layouts/styles.module.scss'
+
+const cx = classNames.bind(styles)
 
 const EmployeePage = () => {
-    const dispatch = useDispatch()
-    const { listData, loading, currentPage, firstPage, lastPage, from, linkPage, nextPage, prevPage, to, totalEmployee, totalPage } = UseEmployee()
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const currentPage = parseInt(searchParams.get('page') || '1');
 
-    const [isChecked, setIsChecked] = useState(false)
+    const [listDataByPage, setListDataByPage] = useState([])
+    const [currPage, setCurrPage] = useState(1)
+    const [totalPage, setTotalPage] = useState(0)
+    const [loading, setLoading] = useState(false)
+    const [from, setFrom] = useState(0)
+    const [to, setTo] = useState(0)
+    const [totalEmployee, setTotalEmployee] = useState(0)
+    // console.log(listDataByPage, 'aaaaaa');
+    const [checkList, setCheckList] = useState<any>([])
     const history = useHistory()
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    useEffect(() => { dispatch<any>(getEmployee()) }, [])
+    useEffect(() => { getDataByPage(currentPage) }, [currentPage])
 
-    const handleChecked = () => {
-        setIsChecked(!isChecked)
+    const getDataByPage = async (page: number) => {
+        try {
+            setLoading(true)
+            const res = await getEmployeeByPage(page)
+            setLoading(false)
+            const data = res.data.data
+            setTotalPage(data.last_page)
+            setCurrPage(data.current_page)
+            setFrom(data.from)
+            setTo(data.to)
+            setTotalEmployee(data.total)
+            // console.log(data, 'listData');
+            setListDataByPage(data.data)
+            // console.log(`Data page=${page}: `, data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const handleChangePage = (event: ChangeEvent<unknown>, page: number) => {
+        const url = new URL(window.location.href)
+        url.searchParams.set('page', page.toString());
+        window.history.pushState(null, '', url.toString())
+        getDataByPage(page)
+    }
+
+    const listID = listDataByPage.map((item: any) => item.id)
+
+    // console.log(checkList, 'checklistttttt');
+
+
+    const handleChecked = (event: ChangeEvent<HTMLInputElement>) => {
+        event.target.checked ? setCheckList(listID) : setCheckList([])
     }
 
     const handleButtonClick = () => {
@@ -69,7 +112,7 @@ const EmployeePage = () => {
                                 <Typography sx={{ fontSize: "14px", lineHeight: 1.35714 }} variant='body2'>Add</Typography>
                             </Button>
                             <Button
-                                disabled={isChecked ? false : true}
+                                disabled={checkList.length !== 0 ? false : true}
                                 sx={{
                                     appearance: "none", fontWeight: 400, textTransform: "capitalize",
                                     color: "rgb(229, 72, 77)", borderRadius: "6px", minWidth: "90px",
@@ -83,7 +126,7 @@ const EmployeePage = () => {
                 <Divider />
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Box sx={{ position: "relative" }}>
-                        <TableContainer style={{ maxHeight: '525px', minHeight: '525px' }}>
+                        <TableContainer className={cx('container')} style={{ maxHeight: '525px', minHeight: '525px' }}>
                             <Table stickyHeader sx={{ minWidth: "750px" }}>
                                 <TableHead>
                                     <TableRow></TableRow>
@@ -106,7 +149,7 @@ const EmployeePage = () => {
                                                 "&:hover": {
                                                     backgroundColor: "rgba(48, 164, 108, 0.08)"
                                                 }
-                                            }} onChange={handleChecked} checked={isChecked} color='success'></Checkbox>
+                                            }} onChange={handleChecked} checked={checkList.length !== 0} color='success'></Checkbox>
                                         </TableCell>
                                         {TABLE_FIELD.map((item, index) => (
                                             <TableCell
@@ -130,8 +173,8 @@ const EmployeePage = () => {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {listData.map((data: any, index: number) => (
-                                        <TableEmployee data={data} key={index} checked={isChecked} />
+                                    {listDataByPage.map((data: any, index: number) => (
+                                        <TableEmployee data={data} key={index} checked={checkList.includes(data?.id)} setCheck={setCheckList} />
                                     ))
                                     }
                                 </TableBody>
@@ -144,14 +187,39 @@ const EmployeePage = () => {
                         )}
                     </Box>
                     <Divider />
-                    <Box>
-                        <Box>
-                            <Box>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                            <Box sx={{ display: 'flex', gap: '5px', paddingTop: '10px', paddingBottom: '10px' }}>
                                 <Pagination
                                     count={totalPage ? totalPage : 1}
+                                    page={currPage}
+                                    sx={{
+                                        ".MuiPaginationItem-root": {
+                                            minWidth: '48px',
+                                            height: '35px',
+                                            display: 'flex',
+                                            borderRadius: '6px',
+                                        },
+                                        '.MuiPaginationItem-root:not(.MuiPaginationItem-firstLast, .MuiPaginationItem-previousNext, .MuiPaginationItem-ellipsis)': {
+                                            background: 'rgb(241, 243, 245)',
+                                            color: "rgb(104, 112, 118)"
+                                        },
+                                        ".Mui-selected": {
+                                            background: "rgb(230, 232, 235) !important",
+                                            color: "rgb(17, 24, 28) !important",
+                                            fontWeight: 600,
+                                            '&:hover': {
+                                                backgroundColor: "rgba(193, 200, 205, 0.16) !important"
+                                            }
+                                        }
+                                    }}
                                     showFirstButton
                                     showLastButton
+                                    onChange={handleChangePage}
                                 />
+                                <Stack sx={{ flexDirection: 'row', minWidth: '103px', maxHeight: '35px', alignItems: 'center', justifyContent: 'center', borderRadius: '6px', padding: '8px 12px', gap: '5px', backgroundColor: "rgb(241, 243, 245)" }}>
+                                    <Typography variant='body2' sx={{ color: 'rgb(104, 112, 118)', lineHeight: 1.35714 }}>{`${from} - ${to} of ${totalEmployee}`}</Typography>
+                                </Stack>
                             </Box>
                         </Box>
                     </Box>

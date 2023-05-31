@@ -2,11 +2,10 @@ import { Box, Stack } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { FormattedMessage } from 'react-intl'
 import { GENDER, MARRIAGE_STATUS } from '../../../assets/data/data'
-import { ICreateParams, ICreateValidation } from '../../../models/employee'
+import { ICreateParams } from '../../../models/employee'
 import InputField from '../components/CreateInputField'
 import SelectField from '../components/CreateSelectField'
 import DatePickerField from '../components/DatePickerComponent'
-import { CalendarIcon, ShowMoreIcon } from '../../../components/Icons'
 
 const PersonalInformation = () => {
 
@@ -43,7 +42,7 @@ const PersonalInformation = () => {
                     control={control}
                     placeholder='Choose Gender'
                     data={GENDER}
-                    errors={errors.gender}
+                    errors={errors.gender ? true : false}
                     helperText="requireGender"
                 />
                 <InputField

@@ -1,8 +1,8 @@
-import { FilledInput, FormHelperText, InputAdornment, MenuItem, Select, Typography } from '@mui/material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { FilledInput, FormHelperText, MenuItem, Select, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { Controller } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
     defaultValue: any,
     placeholder: string,
     data: any,
-    helperText?: any,
+    helperText?: string,
     errors?: any,
     multiple?: boolean,
     disable?: boolean

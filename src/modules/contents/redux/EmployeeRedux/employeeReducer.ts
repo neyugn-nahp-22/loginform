@@ -11,7 +11,7 @@ export interface initialEmployeeState {
   nextPage: string;
   prevPage: string;
   totalPage: number | null;
-  currentPage: number | null;
+  currentPage: number;
   from: number | null;
   to: number;
   totalEmployee: number;

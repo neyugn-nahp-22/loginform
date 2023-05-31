@@ -1,7 +1,6 @@
-import React, { useState, ChangeEvent } from 'react';
-import FormControl from '@mui/material/FormControl';
-import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
+import TextField from '@mui/material/TextField';
+import React, { ChangeEvent, useState } from 'react';
 import { SearchIcon } from '../Icons';
 
 

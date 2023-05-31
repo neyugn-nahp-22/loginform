@@ -10,9 +10,9 @@ const Content = () => {
             <Box sx={{ maxWidth: "1170px", flex: "1 1 0%", margin: "30px 46px 0px" }}>
                 {/* <Routes /> */}
                 <Switch>
-                    {/* <Route path={ROUTES.employee}>
+                    <Route exact path={ROUTES.employee}>
                         <EmployeePage />
-                    </Route> */}
+                    </Route>
                     <Route path={ROUTES.add}>
                         <CreatePage />
                     </Route>

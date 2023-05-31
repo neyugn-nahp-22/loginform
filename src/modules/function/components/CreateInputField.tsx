@@ -57,7 +57,7 @@ const InputField = (props: Props) => {
                                     borderRadius: '6px',
                                     backgroundColor: "rgb(241, 243, 245)",
                                     overflow: "hidden",
-                                    padding: '5px',
+                                    paddingRight: '0px',
                                     "input": {
                                         padding: "12px"
                                     },
