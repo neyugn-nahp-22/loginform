@@ -43,6 +43,14 @@ const EmployeePage = () => {
             }, 500);
             return () => clearTimeout(delay)
         }
+        else if (searchQuery === '') {
+            const delay = setTimeout(() => {
+                getDataSearch(currentPage, searchQuery)
+                const url = `/employee?search=&page=${currentPage}`;
+                history.replace(url);
+            }, 500);
+            return () => clearTimeout(delay)
+        }
         else {
             const delay = setTimeout(() => {
                 getDataByPage(currentPage)
