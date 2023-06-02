@@ -1,15 +1,15 @@
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { Box, Button, Container, FilledInput, FormHelperText, IconButton, Link, MenuItem, Paper, Select, Stack, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, FilledInput, FormHelperText, IconButton, Link, MenuItem, Paper, Select, Stack, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
+import classNames from 'classnames/bind';
 import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { FormattedMessage } from 'react-intl';
+import InputField from '../../../components/InputField/InputField';
+import { ROUTES } from '../../../configs/routes';
 import { ILoginParams, ILoginValidation } from '../../../models/auth';
 import styles from '../pages/Login.module.scss';
-import { FormattedMessage } from 'react-intl';
-import { Controller, useForm } from 'react-hook-form'
-import classNames from 'classnames/bind'
-import { ROUTES } from '../../../configs/routes';
-import InputField from '../../../components/InputField/InputField';
 
 const cx = classNames.bind(styles)
 interface Props {

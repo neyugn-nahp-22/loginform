@@ -19,6 +19,14 @@ export const getEmployeeByPage = async (page: number) => {
   });
 };
 
+export const searchEmployee = async (page: number, search: string) => {
+  return axios.get(`${API_PATHS.getEmployee}?search=${search}&page=${page}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get(ACCESS_TOKEN_KEY)}`,
+    },
+  });
+};
+
 export const getBenefit = () => {
   return axios.get(API_PATHS.benefit, {
     headers: {

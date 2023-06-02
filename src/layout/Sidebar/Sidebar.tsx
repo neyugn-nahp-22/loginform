@@ -1,14 +1,11 @@
-import { Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, Toolbar, Typography } from '@mui/material'
-import classNames from 'classnames/bind'
+import { Divider, Drawer, List, ListItemButton, ListItemIcon, Toolbar, Typography } from '@mui/material'
+import { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import SimpleBar from 'simplebar-react'
 import 'simplebar-react/dist/simplebar.min.css'
 import { AttendanceIcon, EmployeeIcon, GlobalSettingIcon, LeaveIcon, MasterIcon, PayrollIcon, SettingIcon, UserIcon } from '../../components/Icons'
 import { ROUTES } from '../../configs/routes'
-import styles from './Sidebar.module.scss'
-import React, { MouseEvent, useEffect, useState } from 'react'
-import { Link, useHistory, useLocation } from 'react-router-dom'
 
-const cx = classNames.bind(styles)
 
 const LIST_ITEM = [
     {
@@ -63,14 +60,10 @@ const MORE_ITEM = [
         title: "Settings"
     }
 ]
-
-const drawerWidth = 329
-
 const Sidebar = () => {
 
     const [selectedIndex, setSelectedIndex] = useState(0)
     const history = useHistory()
-    const location = useLocation()
 
     useEffect(() => {
         const storedIndex = localStorage.getItem('selectedIndex');
@@ -90,53 +83,106 @@ const Sidebar = () => {
     return (
         <Drawer
             sx={{
-                width: drawerWidth,
-                '& .MuiDrawer-paper': {
-                    width: drawerWidth,
-                    overflow: 'hidden',
-                    borderRight: "1px solid rgba(193, 200, 205, 0.24)"
-                }
+                width: '329px'
             }}
             variant='permanent'
+            PaperProps={{
+                style: { width: '329px', overflow: 'hidden' },
+                sx: { color: 'rgb(17, 24, 28)', borderRadius: '12px', borderRight: '1px solid rgba(193, 200, 205, 0.24)' }
+            }}
         >
             <SimpleBar style={{ maxHeight: "100%", padding: "24px" }}>
-                <Toolbar></Toolbar>
+                <Toolbar variant='dense' sx={{ height: '60px', minHeight: '60px' }}></Toolbar>
                 <List component='nav'>
-                    <Typography className={cx("title")} variant='h4'>General</Typography>
+                    <Typography sx={{ letterSpacing: '-0.03em', fontSize: '24px', textTransform: 'capitalize', color: 'rgb(0, 106, 220)', fontWeight: 500, lineHeight: 1.375 }} variant='h4'>General</Typography>
                     {LIST_ITEM.map((item, index) => {
                         return (
                             <ListItemButton
+                                sx={{
+                                    height: '52px',
+                                    padding: '8px 10px',
+                                    borderRadius: '8px',
+                                    margin: '10px 0px 0px',
+                                    appearance: 'none',
+                                    '&:hover': {
+                                        backgroundColor: 'rgba(193, 200, 205, 0.08)',
+                                    },
+                                    "&.Mui-selected": {
+                                        backgroundColor: 'rgb(241, 243, 245)',
+                                        '&:hover': {
+                                            backgroundColor: 'rgba(0, 145, 255, 0.16)'
+                                        }
+                                    },
+                                    "&.Mui-selected .MuiListItemIcon-root": {
+                                        boxShadow: 'rgba(148, 186, 44, 0.15) 0px 6px 9px',
+                                        backgroundColor: 'rgb(251, 253, 255)'
+                                    }
+                                }}
                                 selected={selectedIndex === index}
                                 onClick={() => handleClickListItem(index, item.href)}
-                                className={cx("more-btn")}
                                 key={index}
                             >
-                                <ListItemIcon sx={{
-                                    color: "rgb(215, 219, 223)",
-                                    marginRight: "10px",
-                                    width: "36px",
-                                    minWidth: "36px",
-                                    borderRadius: "50%",
-                                    backgroundColor: "rgb(241, 243, 245)",
-                                    justifyContent: 'center',
-                                    alignItems: "center"
-                                }}>
+                                <ListItemIcon
+                                    sx={{
+                                        color: "rgb(215, 219, 223)",
+                                        marginRight: "10px",
+                                        width: "36px",
+                                        minWidth: "36px",
+                                        height: '100%',
+                                        borderRadius: "50%",
+                                        backgroundColor: "rgb(241, 243, 245)",
+                                        justifyContent: 'center',
+                                        alignItems: "center",
+                                    }}
+                                >
                                     {item.icon}
                                 </ListItemIcon>
-                                <Typography sx={{ fontSize: "16px" }}>{item.title}</Typography>
+                                <Typography sx={{ fontSize: "16px", letterSpacing: '-0.01em' }}>{item.title}</Typography>
                             </ListItemButton>
                         )
                     })
                     }
-                    <Divider />
-                    <Typography variant='h4' className={cx("advance")}>Advance</Typography>
+                    <Divider sx={{ margin: '10px 0px', borderWidth: '0px 0px thin', borderColor: 'rgba(193, 200, 205, 0.24)' }} />
+                    <Typography sx={{ letterSpacing: '-0.03em', fontSize: '24px', textTransform: 'capitalize', fontWeight: 500, lineHeight: 1.375 }} variant='h4'>Advance</Typography>
                     {MORE_ITEM.map((item, key) => (
                         <ListItemButton
+                            sx={{
+                                height: '52px',
+                                padding: '8px 10px',
+                                borderRadius: '8px',
+                                margin: '10px 0px 0px',
+                                appearance: 'none',
+                                '&:hover': {
+                                    backgroundColor: 'rgba(193, 200, 205, 0.08)',
+                                },
+                                "&.Mui-selected": {
+                                    backgroundColor: 'rgb(241, 243, 245)',
+                                    '&:hover': {
+                                        backgroundColor: 'rgba(0, 145, 255, 0.16)'
+                                    }
+                                },
+                                "&.Mui-selected .MuiListItemIcon-root": {
+                                    boxShadow: 'rgba(148, 186, 44, 0.15) 0px 6px 9px',
+                                    backgroundColor: 'rgb(251, 253, 255)'
+                                }
+                            }}
                             key={key}
                             selected={selectedIndex === key}
                             onClick={() => handleClickListItem(key, item.href)}
-                            className={cx("more-btn")}>
-                            <ListItemIcon>
+                        >
+                            <ListItemIcon
+                                sx={{
+                                    color: "rgb(215, 219, 223)",
+                                    marginRight: "10px",
+                                    width: "36px",
+                                    minWidth: "36px",
+                                    height: '100%',
+                                    borderRadius: "50%",
+                                    backgroundColor: "rgb(241, 243, 245)",
+                                    justifyContent: 'center',
+                                    alignItems: "center",
+                                }}
+                            >
                                 {item.icon}
                             </ListItemIcon>
                             <Typography>{item.title}</Typography>

@@ -1,14 +1,13 @@
-import { Box, Button, Checkbox, CircularProgress, Divider, Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
+import { Box, Button, Checkbox, CircularProgress, Divider, InputAdornment, Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { useHistory, useLocation } from 'react-router'
 
 import { TABLE_FIELD } from '../../../assets/data/data'
 import BreadcrumbComponent from '../../../components/BreadcrumbComponent/BreadcrumbComponent'
-import { AddIcon, DeleteIcon } from '../../../components/Icons'
-import SearchComponent from '../../../components/SearchField/SearchField'
+import { AddIcon, DeleteIcon, SearchIcon } from '../../../components/Icons'
 import { ROUTES } from '../../../configs/routes'
-import { getEmployeeByPage } from '../../../services/employeeService'
+import { getEmployeeByPage, searchEmployee } from '../../../services/employeeService'
 import TableEmployee from '../components/TableEmployee'
 
 import classNames from 'classnames/bind'
@@ -18,7 +17,9 @@ const cx = classNames.bind(styles)
 
 const EmployeePage = () => {
     const location = useLocation();
+    const history = useHistory()
     const searchParams = new URLSearchParams(location.search);
+    // const nameSearch = searchParams.get('search') || ''
     const currentPage = parseInt(searchParams.get('page') || '1');
 
     const [listDataByPage, setListDataByPage] = useState([])
@@ -28,12 +29,35 @@ const EmployeePage = () => {
     const [from, setFrom] = useState(0)
     const [to, setTo] = useState(0)
     const [totalEmployee, setTotalEmployee] = useState(0)
+    const [searchQuery, setSearchQuery] = useState('')
     // console.log(listDataByPage, 'aaaaaa');
     const [checkList, setCheckList] = useState<any>([])
-    const history = useHistory()
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    useEffect(() => { getDataByPage(currentPage) }, [currentPage])
+    useEffect(() => {
+        if (searchQuery) {
+            const delay = setTimeout(() => {
+                getDataSearch(currentPage, searchQuery)
+                const url = `/employee?search=${searchQuery}&page=${currentPage}`;
+                history.replace(url);
+            }, 500);
+            return () => clearTimeout(delay)
+        }
+        else {
+            const delay = setTimeout(() => {
+                getDataByPage(currentPage)
+            }, 100);
+            return () => clearTimeout(delay)
+        }
+    }, [currentPage, searchQuery, history])
+
+    useEffect(() => {
+        const savedSearchQuery = searchParams.get('search');
+        if (savedSearchQuery !== null) { // Kiểm tra nếu có giá trị search từ URL
+            setSearchQuery(savedSearchQuery);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const getDataByPage = async (page: number) => {
         try {
@@ -54,12 +78,42 @@ const EmployeePage = () => {
         }
     }
 
+    const getDataSearch = async (page: number, search: string) => {
+        try {
+            setLoading(true)
+            const res = await searchEmployee(page, search)
+            setLoading(false)
+            const data = res.data.data
+            setTotalPage(data.last_page)
+            setCurrPage(data.current_page)
+            setFrom(data.from)
+            setTo(data.to)
+            setTotalEmployee(data.total)
+            // console.log(data, 'listData');
+            setListDataByPage(data.data)
+            // console.log(`Data page=${page}: `, data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     const handleChangePage = (event: ChangeEvent<unknown>, page: number) => {
         const url = new URL(window.location.href)
+        console.log(url);
         url.searchParams.set('page', page.toString());
         window.history.pushState(null, '', url.toString())
-        getDataByPage(page)
+        if (searchQuery) {
+            getDataSearch(page, searchQuery)
+        }
+        else {
+            getDataByPage(page)
+        }
     }
+
+    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(event.target.value)
+        // console.log(searchQuery, 'nameSearch');
+    };
 
     const listID = listDataByPage.map((item: any) => item.id)
 
@@ -87,7 +141,28 @@ const EmployeePage = () => {
                 }}>
                     <FormattedMessage id="employeeManagement" />
                 </Typography>
-                <SearchComponent />
+                <TextField
+                    sx={{
+                        maxWidth: "200px", background: "rgb(251, 252, 253)", lineHeight: 1.35714, fontSize: "14px", fontWeight: 400,
+                        ".css-1q6at85-MuiInputBase-root-MuiOutlinedInput-root": {
+                            fontSize: '16px',
+                            letterSpacing: "-0.01em",
+                            color: "rgb(17, 24, 28)",
+                            borderRadius: "8px"
+                        }
+                    }}
+                    placeholder="Search..."
+                    value={searchQuery}
+                    onChange={handleInputChange}
+                    size='small'
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment sx={{ color: "rgb(215, 219, 223)" }} position="start">
+                                <SearchIcon />
+                            </InputAdornment>
+                        ),
+                    }}
+                />
             </Box>
             <Paper sx={{
                 color: "rgb(17, 24, 28)",
@@ -173,9 +248,11 @@ const EmployeePage = () => {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {listDataByPage.map((data: any, index: number) => (
-                                        <TableEmployee data={data} key={index} checked={checkList.includes(data?.id)} setCheck={setCheckList} />
-                                    ))
+                                    {listDataByPage.map((data: any, index: number) => {
+                                        return (
+                                            <TableEmployee data={data} key={index} checked={checkList.includes(data?.id)} setCheck={setCheckList} />
+                                        )
+                                    })
                                     }
                                 </TableBody>
                             </Table>
@@ -217,9 +294,12 @@ const EmployeePage = () => {
                                     showLastButton
                                     onChange={handleChangePage}
                                 />
-                                <Stack sx={{ flexDirection: 'row', minWidth: '103px', maxHeight: '35px', alignItems: 'center', justifyContent: 'center', borderRadius: '6px', padding: '8px 12px', gap: '5px', backgroundColor: "rgb(241, 243, 245)" }}>
-                                    <Typography variant='body2' sx={{ color: 'rgb(104, 112, 118)', lineHeight: 1.35714 }}>{`${from} - ${to} of ${totalEmployee}`}</Typography>
-                                </Stack>
+                                {totalEmployee !== 0 ?
+                                    <Stack sx={{ flexDirection: 'row', minWidth: '103px', maxHeight: '35px', alignItems: 'center', justifyContent: 'center', borderRadius: '6px', padding: '8px 12px', gap: '5px', backgroundColor: "rgb(241, 243, 245)" }}>
+                                        <Typography variant='body2' sx={{ color: 'rgb(104, 112, 118)', lineHeight: 1.35714 }}>{`${from} - ${to} of ${totalEmployee}`}</Typography>
+                                    </Stack>
+                                    : ''
+                                }
                             </Box>
                         </Box>
                     </Box>

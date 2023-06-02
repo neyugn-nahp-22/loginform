@@ -2,6 +2,7 @@ import { Typography } from '@mui/material';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import React, { useState } from 'react';
+import { useHistory } from 'react-router';
 
 interface BreadcrumbItem {
     label: string;
@@ -13,16 +14,20 @@ interface BreadcrumbProps {
 }
 
 const BreadcrumbComponent: React.FC<BreadcrumbProps> = ({ items }) => {
+    const history = useHistory()
+
     const [activeIndex, setActiveIndex] = useState(0);
 
-    const handleClick = (index: number) => {
+    const handleClick = (index: number, href: string) => {
         setActiveIndex(index);
+        history.push(href)
     };
+
 
 
     return (
         <Breadcrumbs separator="›">
-            {items.map((item, index) =>
+            {items.map((item: any, index) =>
                 index === items.length - 1
                     ? <Typography
                         sx={{
@@ -37,9 +42,8 @@ const BreadcrumbComponent: React.FC<BreadcrumbProps> = ({ items }) => {
                         <Link
                             key={index}
                             color={index === activeIndex ? 'primary' : 'inherit'}
-                            onClick={() => handleClick(index)}
+                            onClick={() => handleClick(index, item.path)}
                             underline="none"
-                            href={item.path}
                             sx={{
                                 color: "rgb(104, 112, 118)",
                                 lineHeight: "1.35714",

@@ -1,5 +1,5 @@
 import { Checkbox, TableCell, TableRow } from '@mui/material';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent } from 'react';
 import { TABLE_FIELD, Type } from '../../../assets/data/data';
 
 const styleTableCell = {
