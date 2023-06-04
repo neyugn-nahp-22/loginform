@@ -1,14 +1,10 @@
-import { Box, Button, Container, Link, Paper, Stack, Typography } from '@mui/material'
-import React from 'react'
-import styles from '../pages/Login.module.scss';
-import classNames from 'classnames/bind';
+import { Box, Button, Container, Link, Paper, Stack, Typography } from '@mui/material';
+import { useForm } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
 import InputField from '../../../components/InputField/InputField';
-import { useForm } from 'react-hook-form';
-import { IForgotPasswordValidation } from '../../../models/auth';
 import { ROUTES } from '../../../configs/routes';
+import { IForgotPasswordValidation } from '../../../models/auth';
 
-const cx = classNames.bind(styles)
 
 interface Props {
     loading: boolean;
@@ -24,24 +20,23 @@ const ForgetPasswordForm = (props: Props) => {
 
     }
     return (
-        <Container className={cx('login-container')} component='main' maxWidth="lg">
-            <Box className={cx("login-content")}>
-                <Typography className={cx('login-label')} variant='h3'>
+        <Container component='main' maxWidth="lg">
+            <Box>
+                <Typography variant='h3'>
                     <FormattedMessage id='titlePageForgotPassword' />
                 </Typography>
-                <Paper className={cx('login-paper')} elevation={4}>
-                    <Box onSubmit={handleSubmit(onSubmit)} component='form' className={cx('login-form')}>
+                <Paper elevation={4}>
+                    <Box onSubmit={handleSubmit(onSubmit)} component='form'>
                         <InputField
                             id='labelForgotEmail'
                             name='forgotPassword'
-                            className={!!errors.email ? cx('login-input-error') : cx("login-input")}
                             control={control}
                             type='email'
                             errors={errors.email ? true : false}
                             helperText={errors.email ? <FormattedMessage id='requireEmail' /> : ""}
                             InputProps={{ disableUnderline: true }}
                         />
-                        <Stack className={cx("btn-login")}>
+                        <Stack>
                             <Button
                                 type='submit'
                                 size='large'
@@ -54,7 +49,7 @@ const ForgetPasswordForm = (props: Props) => {
                                     <FormattedMessage id='signIn' />
                                 </Typography>
                             </Button>
-                            <Stack className={cx('forget-password')}>
+                            <Stack>
                                 <Link href={ROUTES.login} underline='none' variant='body2'>
                                     <FormattedMessage id='backToSignIn' />
                                 </Link>

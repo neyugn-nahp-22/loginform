@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { userDetail, userLogin } from '../../../services/authService';
-import { ROUTES } from '../../../configs/routes';
-import Cookies from 'js-cookie';
-import { ACCESS_TOKEN_KEY } from '../../../utils/constants';
-import toastMessage from '../../../components/toast/Toast';
 import { replace } from 'connected-react-router';
+import Cookies from 'js-cookie';
+import toastMessage from '../../../components/toast/Toast';
+import { ROUTES } from '../../../configs/routes';
+import { userLogin } from '../../../services/authService';
+import { ACCESS_TOKEN_KEY } from '../../../utils/constants';
 
 export interface initialAuthState {
   loading: boolean;
@@ -31,15 +31,6 @@ export const getToken = createAsyncThunk<void, any, {}>(
   },
 );
 
-export const getUserDetail = createAsyncThunk('auth/getUserDetail', async () => {
-  try {
-    const res = await userDetail();
-    return res.data;
-  } catch (error) {
-    console.log(error);
-  }
-});
-
 const authReducer = createSlice({
   name: 'auth',
   initialState,
@@ -54,17 +45,6 @@ const authReducer = createSlice({
       toastMessage('success', action.payload.message);
     });
     builder.addCase(getToken.rejected, (state, action: any) => {
-      state.loading = false;
-      toastMessage('error', action.payload.message);
-    });
-    builder.addCase(getUserDetail.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(getUserDetail.fulfilled, (state, action) => {
-      state.loading = false;
-      state.userDetail = action.payload.data;
-    });
-    builder.addCase(getUserDetail.rejected, (state, action: any) => {
       state.loading = false;
       toastMessage('error', action.payload.message);
     });

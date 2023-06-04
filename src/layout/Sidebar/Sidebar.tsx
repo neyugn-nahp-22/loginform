@@ -1,8 +1,9 @@
-import { Divider, Drawer, List, ListItemButton, ListItemIcon, Toolbar, Typography } from '@mui/material'
+import { Drawer, List, ListItemButton, ListItemIcon, Toolbar, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import SimpleBar from 'simplebar-react'
 import 'simplebar-react/dist/simplebar.min.css'
+import CustomDivider from '../../components/DividerComponent/DividerComponent'
 import { AttendanceIcon, EmployeeIcon, GlobalSettingIcon, LeaveIcon, MasterIcon, PayrollIcon, SettingIcon, UserIcon } from '../../components/Icons'
 import { ROUTES } from '../../configs/routes'
 
@@ -142,7 +143,7 @@ const Sidebar = () => {
                         )
                     })
                     }
-                    <Divider sx={{ margin: '10px 0px', borderWidth: '0px 0px thin', borderColor: 'rgba(193, 200, 205, 0.24)' }} />
+                    <CustomDivider />
                     <Typography sx={{ letterSpacing: '-0.03em', fontSize: '24px', textTransform: 'capitalize', fontWeight: 500, lineHeight: 1.375 }} variant='h4'>Advance</Typography>
                     {MORE_ITEM.map((item, key) => (
                         <ListItemButton

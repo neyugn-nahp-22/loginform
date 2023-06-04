@@ -1,4 +1,4 @@
-import { Box, Button, Checkbox, CircularProgress, Divider, InputAdornment, Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material'
+import { Box, Button, Checkbox, CircularProgress, InputAdornment, Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { useHistory, useLocation } from 'react-router'
@@ -11,6 +11,7 @@ import { getEmployeeByPage, searchEmployee } from '../../../services/employeeSer
 import TableEmployee from '../components/TableEmployee'
 
 import classNames from 'classnames/bind'
+import CustomDivider from '../../../components/DividerComponent/DividerComponent'
 import styles from '../../function/layouts/styles.module.scss'
 
 const cx = classNames.bind(styles)
@@ -29,7 +30,7 @@ const EmployeePage = () => {
     const [from, setFrom] = useState(0)
     const [to, setTo] = useState(0)
     const [totalEmployee, setTotalEmployee] = useState(0)
-    const [searchQuery, setSearchQuery] = useState('')
+    const [searchQuery, setSearchQuery] = useState<string>('')
     // console.log(listDataByPage, 'aaaaaa');
     const [checkList, setCheckList] = useState<any>([])
 
@@ -43,14 +44,14 @@ const EmployeePage = () => {
             }, 500);
             return () => clearTimeout(delay)
         }
-        else if (searchQuery === '') {
-            const delay = setTimeout(() => {
-                getDataSearch(currentPage, searchQuery)
-                const url = `/employee?search=&page=${currentPage}`;
-                history.replace(url);
-            }, 500);
-            return () => clearTimeout(delay)
-        }
+        // else if (searchQuery === '') {
+        //     const delay = setTimeout(() => {
+        //         getDataSearch(currentPage, searchQuery)
+        //         const url = `/employee?search=&page=${currentPage}`;
+        //         history.replace(url);
+        //     }, 500);
+        //     return () => clearTimeout(delay)
+        // }
         else {
             const delay = setTimeout(() => {
                 getDataByPage(currentPage)
@@ -206,7 +207,7 @@ const EmployeePage = () => {
                         </Stack>
                     </Box>
                 </Box>
-                <Divider />
+                <CustomDivider />
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Box sx={{ position: "relative" }}>
                         <TableContainer className={cx('container')} style={{ maxHeight: '525px', minHeight: '525px' }}>
@@ -271,7 +272,7 @@ const EmployeePage = () => {
                             </Box>
                         )}
                     </Box>
-                    <Divider />
+                    <CustomDivider />
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                             <Box sx={{ display: 'flex', gap: '5px', paddingTop: '10px', paddingBottom: '10px' }}>

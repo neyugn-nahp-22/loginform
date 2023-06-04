@@ -1,6 +1,7 @@
 {
   "titleAuthLayout": "HR Management System",
   "signIn": "Sign In",
+  "signOut": "Sign Out",
   "UserName": "Username",
   "passWord": "Password",
   "factory": "Factory",
@@ -69,5 +70,6 @@
   "benefit": "Benefit",
   "remark": "Remark",
   "hrmAccount": "HRM User Account",
-  "document": "Document"
+  "document": "Document",
+  "settings": "Settings"
 }

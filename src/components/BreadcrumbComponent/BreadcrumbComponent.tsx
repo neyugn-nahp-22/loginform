@@ -35,7 +35,7 @@ const BreadcrumbComponent: React.FC<BreadcrumbProps> = ({ items }) => {
                             lineHeight: "1.35714",
                             fontSize: '14px',
                             fontWeight: 500,
-                            display: 'inline-block'
+                            display: 'inline-block',
                         }}
                         key={index}>{item.label}</Typography>
                     : (
@@ -49,7 +49,8 @@ const BreadcrumbComponent: React.FC<BreadcrumbProps> = ({ items }) => {
                                 lineHeight: "1.35714",
                                 fontSize: '14px',
                                 fontWeight: 500,
-                                display: 'inline-block'
+                                display: 'inline-block',
+                                cursor: 'pointer'
                             }}
                         >
                             {item.label}

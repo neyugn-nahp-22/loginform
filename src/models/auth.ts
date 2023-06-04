@@ -24,6 +24,11 @@ export interface ISignUpParams {
   state: string;
 }
 
+export interface IChangePasswordValidation {
+  newPassword: string;
+  confirmPassword: string;
+}
+
 export interface ISignUpValidation {
   email: string;
   password: string;

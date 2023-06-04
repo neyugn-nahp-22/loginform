@@ -9,7 +9,7 @@ const cx = classNames.bind(styles)
 
 interface Props {
     control: any,
-    className: string,
+    className?: string,
     errors: any,
     name: string,
     type: string,
@@ -21,9 +21,9 @@ interface Props {
 const InputField = (prop: Props) => {
     const { control, className, errors, name, type, helperText, id, InputProps } = prop
     return (
-        <Grid2 container spacing={1} className={cx("login-form-content")}>
+        <Grid2 container spacing={1} >
             <Grid2 direction="row" xs={12}>
-                <Typography>
+                <Typography sx={{ fontSize: '16px', letterSpacing: '-0.01em', display: 'flex', flexWrap: 'wrap' }}>
                     <FormattedMessage id={id} />
                     <span></span>
                 </Typography>
@@ -45,6 +45,36 @@ const InputField = (prop: Props) => {
                             error={errors}
                             helperText={helperText}
                             InputProps={InputProps}
+                            sx={{
+                                ".MuiInputBase-root": {
+                                    borderRadius: '6px',
+                                    backgroundColor: "rgb(241, 243, 245)",
+                                    overflow: "hidden",
+                                    paddingRight: '0px',
+                                    "input": {
+                                        padding: "12px"
+                                    },
+                                    "textarea": {
+                                        padding: "12px"
+                                    }
+                                },
+                                ".Mui-error": {
+                                    border: "1px solid rgb(243, 174, 175)",
+                                    backgroundColor: 'rgb(255, 239, 239)',
+                                    "&:hover": {
+                                        border: "1px solid rgb(243, 174, 175)",
+                                        backgroundColor: 'rgb(255, 239, 239)',
+                                    }
+                                },
+                                ".MuiFormHelperText-root": {
+                                    border: 'none',
+                                    backgroundColor: "transparent",
+                                    "&:hover": {
+                                        border: 'none',
+                                        backgroundColor: "transparent",
+                                    }
+                                }
+                            }}
                         />
                     )}
                 />

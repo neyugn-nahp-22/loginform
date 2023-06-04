@@ -1,13 +1,14 @@
 import { Box, Button, Divider, Stack, Table, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
-import React, { useRef, useState } from 'react'
-import DatePickerField from '../components/DatePickerComponent'
+import { useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { ICreateParams } from '../../../models/employee'
 import { FormattedMessage } from 'react-intl'
-import SelectField from '../components/CreateSelectField'
 import { EMPLOYEE_TYPE, TABLE_CONTRACT } from '../../../assets/data/data'
-import InputField from '../components/CreateInputField'
+import CustomDivider from '../../../components/DividerComponent/DividerComponent'
 import { UploadIcon } from '../../../components/Icons'
+import { ICreateParams } from '../../../models/employee'
+import InputField from '../components/CreateInputField'
+import SelectField from '../components/CreateSelectField'
+import DatePickerField from '../components/DatePickerComponent'
 
 const ContractInformation = () => {
     const { control, handleSubmit, formState: { errors } } = useForm<ICreateParams>({ mode: "onBlur" })
@@ -47,7 +48,7 @@ const ContractInformation = () => {
                 <Typography variant='body2' sx={{ color: "rgb(104, 112, 118)", padding: "10px 20px" }}>
                     <FormattedMessage id="requireFile" />
                 </Typography>
-                <Divider />
+                <CustomDivider />
                 <Stack sx={{ flexFlow: "row wrap", gap: '20px', padding: '20px 14px 30px 20px' }}>
                     <Stack component='form' sx={{ maxWidth: "400px", gap: '10px', flex: '1 1 0%' }}>
                         <DatePickerField

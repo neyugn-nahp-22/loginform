@@ -1,12 +1,13 @@
 import { TabContext, TabPanel } from '@mui/lab'
-import { Box, Button, Divider, Paper, Stack, Typography } from '@mui/material'
+import { Box, Button, Paper, Stack, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
-import PersonalInformation from '../layouts/PersonalInformation'
-import EmploymentDetailsComponent from '../layouts/EmploymentDetails'
+import CustomDivider from '../../../components/DividerComponent/DividerComponent'
 import ContractInformation from '../layouts/ContractInformation'
-import SalaryWages from '../layouts/SalaryWages'
+import EmploymentDetailsComponent from '../layouts/EmploymentDetails'
 import Other from '../layouts/Other'
+import PersonalInformation from '../layouts/PersonalInformation'
+import SalaryWages from '../layouts/SalaryWages'
 
 export const MENU_CREATE = [
     {
@@ -101,7 +102,7 @@ const MenuCreate = () => {
                                     </Typography>
                                 </Box>
                             </Box>
-                            <Divider />
+                            <CustomDivider />
                             {item.component}
                         </Paper>
                     </TabPanel>
