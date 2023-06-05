@@ -8,6 +8,7 @@
   "require": "Please enter this field",
   "requireUsername": "Please enter username",
   "requirePassword": "Please enter password",
+  "requireConfirmPassword": "Please enter confirm password",
   "requireFactory": "Please choose factory",
   "requireEmail": "Please enter your email",
   "requireName": "Please input Name",
@@ -71,5 +72,6 @@
   "remark": "Remark",
   "hrmAccount": "HRM User Account",
   "document": "Document",
-  "settings": "Settings"
+  "settings": "Settings",
+  "askSignOut": "Do you wish to sign out?"
 }

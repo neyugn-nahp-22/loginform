@@ -2,12 +2,14 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Box, Button, Container, FilledInput, FormHelperText, IconButton, Link, MenuItem, Paper, Select, Stack, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
 import InputField from '../../../components/InputField/InputField';
 import { ROUTES } from '../../../configs/routes';
 import { ILoginParams, ILoginValidation } from '../../../models/auth';
+import { LoadingButton } from '@mui/lab';
+import { getAllCompany } from '../../../services/authService';
 
 interface Props {
     onLogin(values: ILoginParams): void;
@@ -15,22 +17,30 @@ interface Props {
     errorMessage: string
 }
 
-const company = [
-    {
-        id: 1,
-        name: "SBM"
-    },
-    {
-        id: 2,
-        name: "DMF"
-    }
-]
+
+
 const LoginForm = (props: Props) => {
     const { onLogin, loading } = props
 
     const [showPassword, setShowPassword] = useState(false);
+    const [company, setCompany] = useState<any>([])
+    // console.log(company.map(item => item.name));
 
     const { control, handleSubmit, formState: { errors } } = useForm<ILoginValidation>()
+
+    const getCompany = async () => {
+        try {
+            const res = await getAllCompany()
+            const data = res.data.data
+            setCompany(data)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        getCompany()
+    }, [])
 
     const onSubmit = (data: ILoginValidation) => {
         onLogin(data)
@@ -104,7 +114,7 @@ const LoginForm = (props: Props) => {
                                 <Controller
                                     name='company_id'
                                     control={control}
-                                    defaultValue={0}
+                                    defaultValue={''}
                                     rules={{ required: true, validate: (value) => value !== 0 }}
                                     render={({ field }: any) => (
                                         <>
@@ -138,11 +148,11 @@ const LoginForm = (props: Props) => {
                                                     if (!selected) {
                                                         return <Typography sx={{ letterSpacing: '-0.01em', color: 'rgb(104, 112, 118)', fontSize: '16px' }}>Select Factory</Typography>
                                                     }
-                                                    return company.find((item) => item.id === selected)?.name
+                                                    return company.find((item: any) => item.id === selected)?.name
                                                 }}
                                             >
                                                 {
-                                                    company.map((item, index) => (
+                                                    company.map((item: any, index: any) => (
                                                         <MenuItem
                                                             sx={{
                                                                 padding: '8px 0px',
@@ -185,35 +195,55 @@ const LoginForm = (props: Props) => {
                             </Grid2>
                         </Grid2>
                         <Stack sx={{ margin: '8px 0px' }}>
-                            <Button
-                                sx={{
-                                    margin: '18px 0px 0px',
-                                    fontWeight: 400,
-                                    lineHeight: 1.71429,
-                                    textTransform: 'capitalize',
-                                    color: 'rgb(251, 253, 255)',
-                                    transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-                                    backgroundColor: 'rgb(0, 145, 255)',
-                                    borderRadius: '6px',
-                                    fontSize: '16px',
-                                    height: '48px',
-                                    "&:hover": {
-                                        boxShadow: 'none',
-                                        textDecoration: 'none',
-                                        backgroundColor: 'rgb(0, 129, 241)'
-                                    }
-                                }}
-                                type='submit'
-                                size='large'
-                                variant='contained'
-                                fullWidth
-                                disabled={loading}
-                                disableElevation
-                            >
-                                <Typography>
-                                    <FormattedMessage id='signIn' />
-                                </Typography>
-                            </Button>
+                            {loading ?
+                                <LoadingButton
+                                    loading={loading}
+                                    variant='contained'
+                                    size='large'
+                                    disableElevation
+                                    sx={{
+                                        margin: '18px 0px 0px',
+                                        fontWeight: 400,
+                                        lineHeight: 1.71429,
+                                        textTransform: 'capitalize',
+                                        color: 'rgb(251, 253, 255)',
+                                        transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+                                        backgroundColor: 'rgba(193, 200, 205, 0.24)',
+                                        borderRadius: '6px',
+                                        fontSize: '16px',
+                                        height: '48px',
+                                    }}
+                                ></LoadingButton>
+                                :
+                                <Button
+                                    sx={{
+                                        margin: '18px 0px 0px',
+                                        fontWeight: 400,
+                                        lineHeight: 1.71429,
+                                        textTransform: 'capitalize',
+                                        color: 'rgb(251, 253, 255)',
+                                        transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+                                        backgroundColor: 'rgb(0, 145, 255)',
+                                        borderRadius: '6px',
+                                        fontSize: '16px',
+                                        height: '48px',
+                                        "&:hover": {
+                                            boxShadow: 'none',
+                                            textDecoration: 'none',
+                                            backgroundColor: 'rgb(0, 129, 241)'
+                                        }
+                                    }}
+                                    type='submit'
+                                    size='large'
+                                    variant='contained'
+                                    fullWidth
+                                    disableElevation
+                                >
+                                    <Typography>
+                                        <FormattedMessage id='signIn' />
+                                    </Typography>
+                                </Button>
+                            }
                             <Stack sx={{ flexDirection: 'row', justifyContent: 'center' }}>
                                 <Link
                                     sx={{

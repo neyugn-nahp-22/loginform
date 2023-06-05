@@ -42,7 +42,6 @@ const authReducer = createSlice({
     builder.addCase(getToken.fulfilled, (state, action: any) => {
       state.loading = false;
       Cookies.set(ACCESS_TOKEN_KEY, action.payload.data.token);
-      toastMessage('success', action.payload.message);
     });
     builder.addCase(getToken.rejected, (state, action: any) => {
       state.loading = false;

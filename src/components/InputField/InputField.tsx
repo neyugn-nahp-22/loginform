@@ -1,11 +1,8 @@
-import { TextField, Typography } from '@mui/material'
-import { Controller } from 'react-hook-form'
+import { TextField, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
+import { Controller } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
-import classNames from 'classnames/bind';
-import styles from './InputField.module.scss'
 
-const cx = classNames.bind(styles)
 
 interface Props {
     control: any,
@@ -56,6 +53,9 @@ const InputField = (prop: Props) => {
                                     },
                                     "textarea": {
                                         padding: "12px"
+                                    },
+                                    "&:hover": {
+                                        backgroundColor: 'rgb(241, 243, 245)'
                                     }
                                 },
                                 ".Mui-error": {
@@ -73,7 +73,7 @@ const InputField = (prop: Props) => {
                                         border: 'none',
                                         backgroundColor: "transparent",
                                     }
-                                }
+                                },
                             }}
                         />
                     )}

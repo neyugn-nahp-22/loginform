@@ -7,7 +7,7 @@ export interface ILoginParams {
 export interface ILoginValidation {
   username: string;
   password: string;
-  company_id: number;
+  company_id: any;
 }
 
 export interface IForgotPasswordValidation {

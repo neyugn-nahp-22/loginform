@@ -2,11 +2,12 @@ import { LoadingButton } from '@mui/lab'
 import { FormattedMessage } from 'react-intl'
 
 interface Props {
-    id: string
+    id: string,
+    onClick?: () => void
 }
 
 const LoadingButtonCustom = (props: Props) => {
-    const { id } = props
+    const { id, onClick } = props
     return (
         <LoadingButton
             sx={{
@@ -28,7 +29,9 @@ const LoadingButtonCustom = (props: Props) => {
             variant='contained'
             size='large'
             disableElevation
-            fullWidth>
+            fullWidth
+            onClick={onClick}
+        >
             <FormattedMessage id={id} />
         </LoadingButton>
     )

@@ -1,18 +1,19 @@
-import { Box, Button, Checkbox, CircularProgress, InputAdornment, Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material'
+import { Box, Button, CircularProgress, InputAdornment, Pagination, Paper, Stack, Table, TableBody, TableContainer, TextField, Typography } from '@mui/material'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { useHistory, useLocation } from 'react-router'
 
-import { TABLE_FIELD } from '../../../assets/data/data'
 import BreadcrumbComponent from '../../../components/BreadcrumbComponent/BreadcrumbComponent'
-import { AddIcon, DeleteIcon, SearchIcon } from '../../../components/Icons'
+import { AddIcon, SearchIcon } from '../../../components/Icons'
 import { ROUTES } from '../../../configs/routes'
 import { getEmployeeByPage, searchEmployee } from '../../../services/employeeService'
-import TableEmployee from '../components/TableEmployee'
+import TableBodyEmployee from '../components/TableBodyEmployee'
 
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import classNames from 'classnames/bind'
 import CustomDivider from '../../../components/DividerComponent/DividerComponent'
 import styles from '../../function/layouts/styles.module.scss'
+import TableHeadEmployee from '../components/TableHeadEmployee'
 
 const cx = classNames.bind(styles)
 
@@ -24,6 +25,7 @@ const EmployeePage = () => {
     const currentPage = parseInt(searchParams.get('page') || '1');
 
     const [listDataByPage, setListDataByPage] = useState([])
+    const [selected, setSelected] = useState<readonly string[]>([]);
     const [currPage, setCurrPage] = useState(1)
     const [totalPage, setTotalPage] = useState(0)
     const [loading, setLoading] = useState(false)
@@ -32,7 +34,8 @@ const EmployeePage = () => {
     const [totalEmployee, setTotalEmployee] = useState(0)
     const [searchQuery, setSearchQuery] = useState<string>('')
     // console.log(listDataByPage, 'aaaaaa');
-    const [checkList, setCheckList] = useState<any>([])
+
+    const isSelected = (staffID: string) => selected.indexOf(staffID) !== -1;
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
@@ -124,17 +127,17 @@ const EmployeePage = () => {
         // console.log(searchQuery, 'nameSearch');
     };
 
-    const listID = listDataByPage.map((item: any) => item.id)
-
-    // console.log(checkList, 'checklistttttt');
-
-
-    const handleChecked = (event: ChangeEvent<HTMLInputElement>) => {
-        event.target.checked ? setCheckList(listID) : setCheckList([])
-    }
-
     const handleButtonClick = () => {
         history.push(ROUTES.add)
+    }
+
+    const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
+        if (event.target.checked) {
+            const newSelected = listDataByPage.map((item: any) => item.staff_id)
+            setSelected(newSelected)
+            return
+        }
+        setSelected([])
     }
 
     return (
@@ -182,6 +185,7 @@ const EmployeePage = () => {
                 marginBottom: "10px"
             }}
                 elevation={3}>
+                {/* Function */}
                 <Box sx={{ display: 'flex', justifyContent: "space-between", alignItems: 'center' }}>
                     <Box sx={{ flex: "1 1 0%" }}></Box>
                     <Box sx={{ flexShrink: 0 }}>
@@ -196,12 +200,17 @@ const EmployeePage = () => {
                                 <Typography sx={{ fontSize: "14px", lineHeight: 1.35714 }} variant='body2'>Add</Typography>
                             </Button>
                             <Button
-                                disabled={checkList.length !== 0 ? false : true}
+                                disabled={selected.length === 0 ? true : false}
                                 sx={{
                                     appearance: "none", fontWeight: 400, textTransform: "capitalize",
                                     color: "rgb(229, 72, 77)", borderRadius: "6px", minWidth: "90px",
-                                    padding: "8px 12px", height: "36px", fontSize: '14px', backgroundColor: "rgb(255, 239, 239)"
-                                }} disableElevation size='small' startIcon={<DeleteIcon />}>
+                                    padding: "8px 12px", height: "36px", fontSize: '14px', backgroundColor: "rgb(255, 239, 239)",
+                                    "&.Mui-disabled": {
+                                        backgroundColor: 'rgb(241, 243, 245)'
+                                    }
+                                }} disableElevation size='small'
+                                startIcon={<DeleteOutlineIcon />}
+                            >
                                 <Typography sx={{ fontSize: "14px", lineHeight: 1.35714 }} variant='body2'>Delete</Typography>
                             </Button>
                         </Stack>
@@ -212,54 +221,15 @@ const EmployeePage = () => {
                     <Box sx={{ position: "relative" }}>
                         <TableContainer className={cx('container')} style={{ maxHeight: '525px', minHeight: '525px' }}>
                             <Table stickyHeader sx={{ minWidth: "750px" }}>
-                                <TableHead>
-                                    <TableRow></TableRow>
-                                    <TableRow>
-                                        <TableCell
-                                            sx={{
-                                                fontSize: "14px",
-                                                fontWeight: 600,
-                                                padding: "0px !important",
-                                                backgroundColor: "rgb(236, 238, 240) !important",
-                                                textAlign: "center",
-                                                borderTopLeftRadius: "8px",
-                                                width: "36px",
-                                                minWidth: "36px",
-                                                border: "1px solid white"
-                                            }}
-                                            padding='checkbox'>
-                                            <Checkbox sx={{
-                                                padding: '4px',
-                                                "&:hover": {
-                                                    backgroundColor: "rgba(48, 164, 108, 0.08)"
-                                                }
-                                            }} onChange={handleChecked} checked={checkList.length !== 0} color='success'></Checkbox>
-                                        </TableCell>
-                                        {TABLE_FIELD.map((item, index) => (
-                                            <TableCell
-                                                align={item.label === "Home Address" ? 'center' : 'left'}
-                                                sx={{
-                                                    fontWeight: 600,
-                                                    fontSize: "14px",
-                                                    border: "1px solid white",
-                                                    minWidth: item.minWidth,
-                                                    borderTopLeftRadius: "0px",
-                                                    borderTopRightRadius: '0px',
-                                                    padding: '3px 10px',
-                                                    backgroundColor: "rgb(236, 238, 240)"
-                                                }}
-                                                key={index}
-                                                colSpan={item.label === "Home Address" ? 2 : 1}
-                                            >
-                                                {item.label}
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                </TableHead>
+                                <TableHeadEmployee
+                                    onSelectAllClick={handleSelectAllClick}
+                                    rowCount={listDataByPage.length}
+                                    numSelected={selected.length} />
                                 <TableBody>
                                     {listDataByPage.map((data: any, index: number) => {
+                                        const isItemSelected = isSelected(data.staff_id)
                                         return (
-                                            <TableEmployee data={data} key={index} checked={checkList.includes(data?.id)} setCheck={setCheckList} />
+                                            <TableBodyEmployee data={data} key={index} isItemSelected={isItemSelected} selected={selected} setSelected={setSelected} />
                                         )
                                     })
                                     }

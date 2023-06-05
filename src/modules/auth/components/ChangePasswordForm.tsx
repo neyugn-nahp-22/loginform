@@ -87,7 +87,7 @@ const ChangePasswordForm = () => {
                             control={control}
                             type='password'
                             errors={errors.confirmPassword ? true : false}
-                            helperText={errors.confirmPassword ? <FormattedMessage id="requirePassword" /> : ""}
+                            helperText={errors.confirmPassword ? <FormattedMessage id="requireConfirmPassword" /> : ""}
                             InputProps={{
                                 disableUnderline: true,
                                 type: showPassword ? 'text' : 'password',

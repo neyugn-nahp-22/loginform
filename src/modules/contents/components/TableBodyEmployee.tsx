@@ -1,5 +1,5 @@
 import { Checkbox, TableCell, TableRow } from '@mui/material';
-import { ChangeEvent } from 'react';
+import { SetStateAction } from 'react';
 import { TABLE_FIELD, Type } from '../../../assets/data/data';
 
 const styleTableCell = {
@@ -10,23 +10,55 @@ const styleTableCell = {
     fontSize: "12px"
 }
 
-const TableEmployee = ({ data, checked, setCheck }: any) => {
-    // const [isChecked, setIsChecked] = useState(false)
+interface TableBodyProps {
+    data: any,
+    isItemSelected: boolean,
+    selected: readonly string[];
+    setSelected: (value: SetStateAction<readonly string[]>) => void
+}
 
-    const handleChecked = (event: ChangeEvent<HTMLInputElement>, id: number) => {
-        // setIsChecked(!isChecked)
-        // console.log(event.target.checked, 'event');
+const TableBodyEmployee = (props: TableBodyProps) => {
+    const { data, isItemSelected, selected, setSelected } = props
 
-        setCheck((prevList: number[]) => {
-            // console.log(prevList, 'preList');
-            return !event.target.checked ? prevList?.filter((item: any) => item !== id) : [...prevList, id]
-        })
-    }
+    const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
+        // console.log(name, 'name');
+        // console.log(selected, 'selected');
+        const selectedIndex = selected.indexOf(name);
+        let newSelected: readonly string[] = [];
 
-    // useEffect(() => { setIsChecked(checked) }, [checked])
+        if (selectedIndex === -1) {
+            newSelected = newSelected.concat(selected, name);
+        } else if (selectedIndex === 0) {
+            newSelected = newSelected.concat(selected.slice(1));
+        } else if (selectedIndex === selected.length - 1) {
+            newSelected = newSelected.concat(selected.slice(0, -1));
+        } else if (selectedIndex > 0) {
+            newSelected = newSelected.concat(
+                selected.slice(0, selectedIndex),
+                selected.slice(selectedIndex + 1)
+            );
+        }
+
+        setSelected(newSelected);
+    };
 
     return (
-        <TableRow sx={{ backgroundColor: "rgb(248, 249, 250)", opacity: 1 }} hover>
+        <TableRow
+            sx={{
+                backgroundColor: "rgb(248, 249, 250)",
+                opacity: 1,
+                "&.Mui-selected": {
+                    backgroundColor: 'rgb(233, 249, 238)',
+                    "&:hover": {
+                        backgroundColor: 'rgb(237, 246, 255)',
+                        color: 'rgb(0, 145, 255)'
+                    }
+                },
+            }}
+            hover
+            selected={isItemSelected}
+            onClick={(event) => { handleClick(event, data.staff_id) }}
+        >
             <TableCell sx={{
                 lineHeight: 1.35714,
                 fontSize: "14px",
@@ -35,12 +67,19 @@ const TableEmployee = ({ data, checked, setCheck }: any) => {
                 textAlign: "center",
                 padding: 0
             }} padding='checkbox'>
-                <Checkbox sx={{
-                    "&:hover": {
-                        backgroundColor: "rgba(48, 164, 108, 0.08)"
-                    },
-                    padding: "3px",
-                }} onChange={(event) => handleChecked(event, data?.id)} color='success' checked={checked}></Checkbox>
+                <Checkbox
+                    size='small'
+                    sx={{
+                        "&:hover": {
+                            backgroundColor: "rgba(48, 164, 108, 0.08)"
+                        },
+                        padding: "3px",
+                        "&.Mui-checked": {
+                            color: 'rgb(48, 164, 108)'
+                        },
+                    }}
+                    color='success'
+                    checked={isItemSelected} />
             </TableCell>
             {TABLE_FIELD.map((item: any, index: number) => {
                 switch (item.id) {
@@ -114,4 +153,4 @@ const TableEmployee = ({ data, checked, setCheck }: any) => {
     )
 }
 
-export default TableEmployee
+export default TableBodyEmployee
